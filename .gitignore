@@ -1,0 +1,27 @@
+# Ignore les fichiers et dossiers spécifiques à Node.js
+node_modules/
+
+# Ignore les fichiers de configuration pour certains outils
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore les fichiers de cache créés par différents systèmes
+.eslintcache
+*.swp
+*.log
+
+# Ignore les fichiers de sauvegarde automatique de Visual Studio Code
+.vscode/
+
+# Ignore les fichiers générés lors de la construction du projet
+/build
+
+# Ignore les dépendances installées via npm
+# Si vous utilisez yarn, commentez la ligne ci-dessous
+# et décommentez la ligne suivante.
+# Vous pouvez également inclure `yarn.lock` si vous utilisez Yarn.
+package-lock.json
+yarn.lock
+
+.DS_Store

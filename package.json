@@ -1,0 +1,22 @@
+{
+  "name": "aml_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andre Mulaja",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.1.5",
+    "mysql2": "^3.2.3",
+    "nodemon": "^2.0.22"
+  }
+}
