@@ -1,9 +1,9 @@
 import { connection } from "./connexion.js";
 
-class CategoriesProduits {
-  static selectCategoriesProduits() {
+class Clients {
+  static selectClients() {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM categories_produits", (error, results, fields) => {
+      connection.query("SELECT * FROM clients", (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -15,57 +15,57 @@ class CategoriesProduits {
     });
   }
 
-  static insertCategorieProduit(nom, description, id_entreprise) {
+  static insertClient(nom, prenom, adresse, telephone, email, id_entreprise) {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO categories_produits (nom, description, id_entreprise) VALUES (?, ?, ?)";
-      const values = [nom, description, id_entreprise];
+      const query = "INSERT INTO clients (nom, prenom, adresse, telephone, email, id_entreprise) VALUES (?, ?, ?, ?, ?, ?)";
+      const values = [nom, prenom, adresse, telephone, email, id_entreprise];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Inserted categorie_produit with ID:", results.insertId);
+          console.log("Inserted client with ID:", results.insertId);
           resolve(results);
         }
       });
     });
   }
 
-  static updateCategorieProduit(id, nom, description, id_entreprise) {
+  static updateClient(id, nom, prenom, adresse, telephone, email) {
     return new Promise((resolve, reject) => {
-      const query = "UPDATE categories_produits SET nom = ?, description = ?, id_entreprise = ? WHERE id = ?";
-      const values = [nom, description, id_entreprise, id];
+      const query = "UPDATE clients SET nom = ?, prenom = ?, adresse = ?, telephone = ?, email = ? WHERE id = ?";
+      const values = [nom, prenom, adresse, telephone, email, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Updated categorie_produit with ID:", id);
+          console.log("Updated client with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static deleteCategorieProduit(id) {
+  static deleteClient(id) {
     return new Promise((resolve, reject) => {
-      const query = "DELETE FROM categories_produits WHERE id = ?";
+      const query = "DELETE FROM clients WHERE id = ?";
       const values = [id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Deleted categorie_produit with ID:", id);
+          console.log("Deleted client with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static getCategorieProduitById(id) {
+  static getClientById(id) {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM categories_produits WHERE id=?", [id], (error, results, fields) => {
+      connection.query("SELECT * FROM clients WHERE id=?", [id], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -78,10 +78,10 @@ class CategoriesProduits {
   }
 
   // Additional methods
-  static getProduitsInCategorie(categorieId) {
+  static getClientsByEnterprise(enterpriseId) {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM produits WHERE categorie_produit = ?";
-      connection.query(query, [categorieId], (error, results, fields) => {
+      const query = "SELECT * FROM clients WHERE id_entreprise = ?";
+      connection.query(query, [enterpriseId], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -94,4 +94,4 @@ class CategoriesProduits {
   }
 }
 
-export { CategoriesProduits };
+export { Clients };

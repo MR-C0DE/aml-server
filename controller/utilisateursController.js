@@ -1,11 +1,11 @@
-import { Utilisateur } from "../model/utilisateur.js";
+import { Utilisateurs } from "../model/utilisateurs.js";
 
-class UtilisateurController {
+class UtilisateursController {
   
   // Récupère tous les utilisateurs
   static async getUtilisateurs(request, response) {
     try {
-      const utilisateurs = await Utilisateur.selectUtilisateurs();
+      const utilisateurs = await Utilisateurs.selectUtilisateurs();
       response.status(200).json(utilisateurs);
     } catch (error) {
       console.error(error);
@@ -16,7 +16,7 @@ class UtilisateurController {
   // Récupère un utilisateur par son id
   static async getUtilisateurById(request, response) {
     try {
-      const utilisateur = await Utilisateur.getUtilisateurById(request.params.id);
+      const utilisateur = await Utilisateurs.getUtilisateurById(request.params.id);
       if (utilisateur) {
         response.status(200).json(utilisateur);
       } else {
@@ -31,7 +31,7 @@ class UtilisateurController {
     // Récupère un utilisateur par son matricule
     static async getUtilisateurByMatricule(request, response) {
         try {
-          const utilisateur = await Utilisateur.getUtilisateurByMatricule(request.params.matricule);
+          const utilisateur = await Utilisateurs.getUtilisateurByMatricule(request.params.matricule);
           if (utilisateur) {
             response.json(utilisateur);
           } else {
@@ -47,7 +47,7 @@ class UtilisateurController {
   static async createUtilisateur(request, response) {
     const { matricule, password, employe_id } = request.body;
     try {
-      const utilisateur = await Utilisateur.insertUtilisateur(matricule, password, employe_id);
+      const utilisateur = await Utilisateurs.insertUtilisateur(matricule, password, employe_id);
       response.status(201).json(utilisateur);
     } catch (error) {
       console.error(error);
@@ -74,7 +74,7 @@ class UtilisateurController {
   // Supprime un utilisateur existant
   static async deleteUtilisateur(request, response) {
     try {
-      const utilisateur = await Utilisateur.deleteUtilisateur(request.params.id);
+      const utilisateur = await Utilisateurs.deleteUtilisateur(request.params.id);
       if (utilisateur) {
         response.json({ message: "Utilisateur supprimé avec succès." });
       } else {
@@ -88,4 +88,4 @@ class UtilisateurController {
 
 }
 
-export { UtilisateurController };
+export { UtilisateursController };

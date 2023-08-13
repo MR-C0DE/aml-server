@@ -1,9 +1,9 @@
 import { connection } from "./connexion.js";
 
-class CategoriesProduits {
-  static selectCategoriesProduits() {
+class TransactionsCaisse {
+  static selectTransactionsCaisse() {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM categories_produits", (error, results, fields) => {
+      connection.query("SELECT * FROM transactions_caisse", (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -15,57 +15,57 @@ class CategoriesProduits {
     });
   }
 
-  static insertCategorieProduit(nom, description, id_entreprise) {
+  static insertTransactionCaisse(data) {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO categories_produits (nom, description, id_entreprise) VALUES (?, ?, ?)";
-      const values = [nom, description, id_entreprise];
+      const query = "INSERT INTO transactions_caisse (id_succursale, id_employe, montant, type, description, date_transaction) VALUES (?, ?, ?, ?, ?, ?)";
+      const values = [data.id_succursale, data.id_employe, data.montant, data.type, data.description, data.date_transaction];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Inserted categorie_produit with ID:", results.insertId);
+          console.log("Inserted transaction_caisse with ID:", results.insertId);
           resolve(results);
         }
       });
     });
   }
 
-  static updateCategorieProduit(id, nom, description, id_entreprise) {
+  static updateTransactionCaisse(id, data) {
     return new Promise((resolve, reject) => {
-      const query = "UPDATE categories_produits SET nom = ?, description = ?, id_entreprise = ? WHERE id = ?";
-      const values = [nom, description, id_entreprise, id];
+      const query = "UPDATE transactions_caisse SET id_succursale = ?, id_employe = ?, montant = ?, type = ?, description = ?, date_transaction = ? WHERE id = ?";
+      const values = [data.id_succursale, data.id_employe, data.montant, data.type, data.description, data.date_transaction, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Updated categorie_produit with ID:", id);
+          console.log("Updated transaction_caisse with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static deleteCategorieProduit(id) {
+  static deleteTransactionCaisse(id) {
     return new Promise((resolve, reject) => {
-      const query = "DELETE FROM categories_produits WHERE id = ?";
+      const query = "DELETE FROM transactions_caisse WHERE id = ?";
       const values = [id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Deleted categorie_produit with ID:", id);
+          console.log("Deleted transaction_caisse with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static getCategorieProduitById(id) {
+  static getTransactionCaisseById(id) {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM categories_produits WHERE id=?", [id], (error, results, fields) => {
+      connection.query("SELECT * FROM transactions_caisse WHERE id=?", [id], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -78,10 +78,10 @@ class CategoriesProduits {
   }
 
   // Additional methods
-  static getProduitsInCategorie(categorieId) {
+  static getTransactionsByEmployee(employeeId) {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM produits WHERE categorie_produit = ?";
-      connection.query(query, [categorieId], (error, results, fields) => {
+      const query = "SELECT * FROM transactions_caisse WHERE id_employe = ?";
+      connection.query(query, [employeeId], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -94,4 +94,4 @@ class CategoriesProduits {
   }
 }
 
-export { CategoriesProduits };
+export { TransactionsCaisse };

@@ -5,7 +5,7 @@ const config = {
     password: 'root',
     host: 'localhost',
     socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-    database: 'aml',
+    database: 'aml_db',
     multipleStatements: true
   };
   

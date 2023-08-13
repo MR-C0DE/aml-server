@@ -1,0 +1,88 @@
+import { CommandesFournisseurs } from "../model/commandesFournisseurs.js";
+
+class CommandesFournisseursController {
+  static async getCommandesFournisseurs(request, response) {
+    try {
+      const commandesFournisseurs = await CommandesFournisseurs.selectCommandesFournisseurs();
+      response.status(200).json(commandesFournisseurs);
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("Error getting commandes fournisseurs.");
+    }
+  }
+
+  static async createCommandeFournisseur(request, response) {
+    const { id_achat, id_produit, quantite } = request.body;
+
+    try {
+      const result = await CommandesFournisseurs.insertCommandeFournisseur(id_achat, id_produit, quantite);
+      response.status(201).json({ message: "Commande fournisseur created successfully.", id: result.insertId });
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("Error creating commande fournisseur.");
+    }
+  }
+
+  static async updateCommandeFournisseur(request, response) {
+    const { id } = request.params;
+    const { id_achat, id_produit, quantite } = request.body;
+
+    try {
+      const result = await CommandesFournisseurs.updateCommandeFournisseur(id, id_achat, id_produit, quantite);
+      if (result.affectedRows === 0) {
+        response.status(404).json({ message: `Commande fournisseur with ID ${id} not found.` });
+      } else {
+        response.status(200).json({ message: "Commande fournisseur updated successfully." });
+      }
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("Error updating commande fournisseur.");
+    }
+  }
+
+  static async deleteCommandeFournisseur(request, response) {
+    const { id } = request.params;
+
+    try {
+      const result = await CommandesFournisseurs.deleteCommandeFournisseur(id);
+      if (result.affectedRows === 0) {
+        response.status(404).json({ message: `Commande fournisseur with ID ${id} not found.` });
+      } else {
+        response.status(200).json({ message: "Commande fournisseur deleted successfully." });
+      }
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("Error deleting commande fournisseur.");
+    }
+  }
+
+  static async getCommandeFournisseurById(request, response) {
+    const { id } = request.params;
+
+    try {
+      const commandeFournisseur = await CommandesFournisseurs.getCommandeFournisseurById(id);
+      if (!commandeFournisseur) {
+        response.status(404).json({ message: `Commande fournisseur with ID ${id} not found.` });
+      } else {
+        response.status(200).json(commandeFournisseur);
+      }
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("Error getting commande fournisseur.");
+    }
+  }
+
+  static async getCommandesForAchat(request, response) {
+    const { achatId } = request.params;
+
+    try {
+      const commandes = await CommandesFournisseurs.getCommandesForAchat(achatId);
+      response.status(200).json(commandes);
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("Error getting commandes for achat.");
+    }
+  }
+}
+
+export { CommandesFournisseursController };

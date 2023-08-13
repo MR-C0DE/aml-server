@@ -1,9 +1,9 @@
 import { connection } from "./connexion.js";
 
-class CategoriesProduits {
-  static selectCategoriesProduits() {
+class CommandesFournisseurs {
+  static selectCommandesFournisseurs() {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM categories_produits", (error, results, fields) => {
+      connection.query("SELECT * FROM commandes_fournisseurs", (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -15,57 +15,57 @@ class CategoriesProduits {
     });
   }
 
-  static insertCategorieProduit(nom, description, id_entreprise) {
+  static insertCommandeFournisseur(id_achat, id_produit, quantite) {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO categories_produits (nom, description, id_entreprise) VALUES (?, ?, ?)";
-      const values = [nom, description, id_entreprise];
+      const query = "INSERT INTO commandes_fournisseurs (id_achat, id_produit, quantite) VALUES (?, ?, ?)";
+      const values = [id_achat, id_produit, quantite];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Inserted categorie_produit with ID:", results.insertId);
+          console.log("Inserted commande_fournisseur with ID:", results.insertId);
           resolve(results);
         }
       });
     });
   }
 
-  static updateCategorieProduit(id, nom, description, id_entreprise) {
+  static updateCommandeFournisseur(id, id_achat, id_produit, quantite) {
     return new Promise((resolve, reject) => {
-      const query = "UPDATE categories_produits SET nom = ?, description = ?, id_entreprise = ? WHERE id = ?";
-      const values = [nom, description, id_entreprise, id];
+      const query = "UPDATE commandes_fournisseurs SET id_achat = ?, id_produit = ?, quantite = ? WHERE id = ?";
+      const values = [id_achat, id_produit, quantite, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Updated categorie_produit with ID:", id);
+          console.log("Updated commande_fournisseur with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static deleteCategorieProduit(id) {
+  static deleteCommandeFournisseur(id) {
     return new Promise((resolve, reject) => {
-      const query = "DELETE FROM categories_produits WHERE id = ?";
+      const query = "DELETE FROM commandes_fournisseurs WHERE id = ?";
       const values = [id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Deleted categorie_produit with ID:", id);
+          console.log("Deleted commande_fournisseur with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static getCategorieProduitById(id) {
+  static getCommandeFournisseurById(id) {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM categories_produits WHERE id=?", [id], (error, results, fields) => {
+      connection.query("SELECT * FROM commandes_fournisseurs WHERE id=?", [id], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -78,10 +78,15 @@ class CategoriesProduits {
   }
 
   // Additional methods
-  static getProduitsInCategorie(categorieId) {
+  static getCommandesForAchat(achatId) {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM produits WHERE categorie_produit = ?";
-      connection.query(query, [categorieId], (error, results, fields) => {
+      const query = `
+        SELECT cf.*, p.nom AS nom_produit
+        FROM commandes_fournisseurs cf
+        INNER JOIN produits p ON cf.id_produit = p.id
+        WHERE cf.id_achat = ?
+      `;
+      connection.query(query, [achatId], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -94,4 +99,4 @@ class CategoriesProduits {
   }
 }
 
-export { CategoriesProduits };
+export { CommandesFournisseurs };

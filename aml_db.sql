@@ -25,7 +25,7 @@ CREATE TABLE `entreprises` (
   `email` varchar(255) DEFAULT NULL,
   `site_web` varchar(255) DEFAULT NULL,
   `matricule` varchar(50) DEFAULT NULL,
-  `statut` varchar(50) DEFAULT NULL
+  `statut` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -390,3 +390,77 @@ CREATE TABLE `aml_paiements_entreprises` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+-- ###############################
+-- ###############################
+-- ######### EN ATTENTE ##########
+-- ###############################
+-- ###############################
+
+-- Table `retours_produits`
+CREATE TABLE `retours_produits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_vente` int(11) NOT NULL,
+  `id_produit` int(11) NOT NULL,
+  `quantite` int(11) NOT NULL,
+  `raison` text,
+  `date_retour` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_vente` (`id_vente`),
+  KEY `id_produit` (`id_produit`),
+  CONSTRAINT `fk_retours_vente` FOREIGN KEY (`id_vente`) REFERENCES `ventes` (`id`),
+  CONSTRAINT `fk_retours_produit` FOREIGN KEY (`id_produit`) REFERENCES `produits` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Table `transferts_produits`
+CREATE TABLE `transferts_produits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_produit` int(11) NOT NULL,
+  `id_succursale_source` int(11) NOT NULL,
+  `id_succursale_destination` int(11) NOT NULL,
+  `quantite` int(11) NOT NULL,
+  `date_transfert` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_produit` (`id_produit`),
+  KEY `id_succursale_source` (`id_succursale_source`),
+  KEY `id_succursale_destination` (`id_succursale_destination`),
+  CONSTRAINT `fk_transferts_produit` FOREIGN KEY (`id_produit`) REFERENCES `produits` (`id`),
+  CONSTRAINT `fk_transferts_source` FOREIGN KEY (`id_succursale_source`) REFERENCES `succursales` (`id`),
+  CONSTRAINT `fk_transferts_destination` FOREIGN KEY (`id_succursale_destination`) REFERENCES `succursales` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Table `historique_prix`
+CREATE TABLE `historique_prix` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_produit` int(11) NOT NULL,
+  `prix_unitaire` decimal(10,2) NOT NULL,
+  `date_mise_a_jour` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_produit` (`id_produit`),
+  CONSTRAINT `fk_historique_prix_produit` FOREIGN KEY (`id_produit`) REFERENCES `produits` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Table `analyses_ventes`
+CREATE TABLE `analyses_ventes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_produit` int(11) NOT NULL,
+  `mois_annee` varchar(7) NOT NULL,
+  `ventes_totales` int(11) NOT NULL,
+  `stock_initial` int(11) NOT NULL,
+  `stock_final` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_produit` (`id_produit`),
+  CONSTRAINT `fk_analyses_ventes_produit` FOREIGN KEY (`id_produit`) REFERENCES `produits` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+

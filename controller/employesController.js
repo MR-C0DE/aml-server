@@ -12,11 +12,10 @@ class EmployesController {
   }
 
   static async createEmploye(request, response) {
-    const { nom, type_id, salaire, date_embauche } = request.body;
-
+    const { nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
     try {
-      const result = await Employes.insertEmploye(nom, type_id, salaire, date_embauche);
-      response.status(201).json({ message: "Employe created successfully.", id: result.insertId });
+      const result = await Employes.insertEmploye(nom, salaire, date_embauche, statut, type_employe, id_entreprise);
+      response.status(201).json(result);
     } catch (error) {
       console.error(error);
       response.status(500).send("Error creating employe.");
@@ -25,15 +24,10 @@ class EmployesController {
 
   static async updateEmploye(request, response) {
     const { id } = request.params;
-    const { nom, type_id, salaire, date_embauche } = request.body;
-
+    const { nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
     try {
-      const result = await Employes.updateEmploye(id, nom, type_id, salaire, date_embauche);
-      if (result.affectedRows === 0) {
-        response.status(404).json({ message: `Employe with ID ${id} not found.` });
-      } else {
-        response.status(200).json({ message: "Employe updated successfully." });
-      }
+      const result = await Employes.updateEmploye(id, nom, salaire, date_embauche, statut, type_employe, id_entreprise);
+      response.status(200).json(result);
     } catch (error) {
       console.error(error);
       response.status(500).send("Error updating employe.");
@@ -42,14 +36,9 @@ class EmployesController {
 
   static async deleteEmploye(request, response) {
     const { id } = request.params;
-
     try {
       const result = await Employes.deleteEmploye(id);
-      if (result.affectedRows === 0) {
-        response.status(404).json({ message: `Employe with ID ${id} not found.` });
-      } else {
-        response.status(200).json({ message: "Employe deleted successfully." });
-      }
+      response.status(200).json(result);
     } catch (error) {
       console.error(error);
       response.status(500).send("Error deleting employe.");
@@ -58,17 +47,23 @@ class EmployesController {
 
   static async getEmployeById(request, response) {
     const { id } = request.params;
-
     try {
-      const employe = await Employes.getEmployesById(id);
-      if (!employe) {
-        response.status(404).json({ message: `Employe with ID ${id} not found.` });
-      } else {
-        response.status(200).json(employe);
-      }
+      const employe = await Employes.getEmployeById(id);
+      response.status(200).json(employe);
     } catch (error) {
       console.error(error);
-      response.status(500).send("Error getting employe.");
+      response.status(500).send("Error getting employe by ID.");
+    }
+  }
+
+  static async getEmployesByType(request, response) {
+    const { typeId } = request.params;
+    try {
+      const employes = await Employes.getEmployesByType(typeId);
+      response.status(200).json(employes);
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("Error getting employes by type.");
     }
   }
 }

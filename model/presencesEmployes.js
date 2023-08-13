@@ -1,9 +1,9 @@
 import { connection } from "./connexion.js";
 
-class Entreprises {
-  static selectEntreprises() {
+class PresencesEmployes {
+  static selectPresencesEmployes() {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM entreprises", (error, results, fields) => {
+      connection.query("SELECT * FROM presences_employes", (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -15,57 +15,57 @@ class Entreprises {
     });
   }
 
-  static insertEntreprise(nom, pays, ville, adresse, telephone, email, site_web, matricule, statut) {
+  static insertPresenceEmploye(id_succursale, id_employe, heure_arrivee, heure_depart) {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO entreprises (nom, pays, ville, adresse, telephone, email, site_web, matricule, statut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      const values = [nom, pays, ville, adresse, telephone, email, site_web, matricule, statut];
+      const query = "INSERT INTO presences_employes (id_succursale, id_employe, heure_arrivee, heure_depart) VALUES (?, ?, ?, ?)";
+      const values = [id_succursale, id_employe, heure_arrivee, heure_depart];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Inserted entreprise with ID:", results.insertId);
+          console.log("Inserted presence_employe with ID:", results.insertId);
           resolve(results);
         }
       });
     });
   }
 
-  static updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut) {
+  static updatePresenceEmploye(id, id_succursale, id_employe, heure_arrivee, heure_depart) {
     return new Promise((resolve, reject) => {
-      const query = "UPDATE entreprises SET nom = ?, pays = ?, ville = ?, adresse = ?, telephone = ?, email = ?, site_web = ?, matricule = ?, statut = ? WHERE id = ?";
-      const values = [nom, pays, ville, adresse, telephone, email, site_web, matricule, statut, id];
+      const query = "UPDATE presences_employes SET id_succursale = ?, id_employe = ?, heure_arrivee = ?, heure_depart = ? WHERE id = ?";
+      const values = [id_succursale, id_employe, heure_arrivee, heure_depart, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Updated entreprise with ID:", id);
+          console.log("Updated presence_employe with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static deleteEntreprise(id) {
+  static deletePresenceEmploye(id) {
     return new Promise((resolve, reject) => {
-      const query = "DELETE FROM entreprises WHERE id = ?";
+      const query = "DELETE FROM presences_employes WHERE id = ?";
       const values = [id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Deleted entreprise with ID:", id);
+          console.log("Deleted presence_employe with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static getEntrepriseById(id) {
+  static getPresenceEmployeById(id) {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM entreprises WHERE id=?", [id], (error, results, fields) => {
+      connection.query("SELECT * FROM presences_employes WHERE id=?", [id], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -78,10 +78,10 @@ class Entreprises {
   }
 
   // Additional methods
-  static getEntreprisesInCountry(country) {
+  static getPresencesForEmployee(employeeId) {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM entreprises WHERE pays = ?";
-      connection.query(query, [country], (error, results, fields) => {
+      const query = "SELECT * FROM presences_employes WHERE id_employe = ?";
+      connection.query(query, [employeeId], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -93,10 +93,10 @@ class Entreprises {
     });
   }
 
-  static getEntreprisesWithStatus(status) {
+  static getPresencesForSuccursale(succursaleId) {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM entreprises WHERE statut = ?";
-      connection.query(query, [status], (error, results, fields) => {
+      const query = "SELECT * FROM presences_employes WHERE id_succursale = ?";
+      connection.query(query, [succursaleId], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -109,4 +109,4 @@ class Entreprises {
   }
 }
 
-export { Entreprises };
+export { PresencesEmployes };

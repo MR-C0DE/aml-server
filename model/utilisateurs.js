@@ -1,28 +1,24 @@
 import { connection } from "./connexion.js";
 
-class Utilisateur {
+class Utilisateurs {
   static selectUtilisateurs() {
     return new Promise((resolve, reject) => {
-      connection.query(
-        "SELECT * FROM utilisateurs",
-        (error, results, fields) => {
-          if (error) {
-            console.error("Error executing query:", error);
-            reject(error);
-          } else {
-            console.log("Query results:", results);
-            resolve(results);
-          }
+      connection.query("SELECT * FROM utilisateurs", (error, results, fields) => {
+        if (error) {
+          console.error("Error executing query:", error);
+          reject(error);
+        } else {
+          console.log("Query results:", results);
+          resolve(results);
         }
-      );
+      });
     });
   }
 
-  static insertUtilisateur(matricule, password, employe_id) {
+  static insertUtilisateur(matricule, password, statut, id_employe) {
     return new Promise((resolve, reject) => {
-      const query =
-        "INSERT INTO utilisateurs (matricule, password, employe_id) VALUES (?, ?, ?)";
-      const values = [matricule, password, employe_id];
+      const query = "INSERT INTO utilisateurs (matricule, password, statut, id_employe) VALUES (?, ?, ?, ?)";
+      const values = [matricule, password, statut, id_employe];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
@@ -35,11 +31,10 @@ class Utilisateur {
     });
   }
 
-  static updateUtilisateur(id, matricule, password, employe_id) {
+  static updateUtilisateur(id, matricule, password, statut, id_employe) {
     return new Promise((resolve, reject) => {
-      const query =
-        "UPDATE utilisateurs SET matricule = ?, password = ?, employe_id = ? WHERE id = ?";
-      const values = [matricule, password, employe_id, id];
+      const query = "UPDATE utilisateurs SET matricule = ?, password = ?, statut = ?, id_employe = ? WHERE id = ?";
+      const values = [matricule, password, statut, id_employe, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
@@ -70,25 +65,7 @@ class Utilisateur {
 
   static getUtilisateurById(id) {
     return new Promise((resolve, reject) => {
-      connection.query(
-        "SELECT * FROM utilisateurs WHERE id=?",
-        [id],
-        (error, results, fields) => {
-          if (error) {
-            console.error("Error executing query:", error);
-            reject(error);
-          } else {
-            console.log("Query results:", results);
-            resolve(results[0]);
-          }
-        }
-      );
-    });
-  }
-
-  static getUtilisateurByMatricule(matricule) {
-    return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM utilisateurs WHERE matricule = ?", [matricule], (error, results, fields) => {
+      connection.query("SELECT * FROM utilisateurs WHERE id=?", [id], (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
@@ -99,6 +76,11 @@ class Utilisateur {
       });
     });
   }
+
+  // Additional methods
+
+  // You can add more methods here based on your requirements
+  
 }
 
-export { Utilisateur };
+export { Utilisateurs };

@@ -1,30 +1,27 @@
 import { Router } from "express";
-import { ProduitsController } from "../controller/produitsController.js";
+import { ProduitsController } from "../controller/produitsController.js"; // Assurez-vous que le chemin du contrôleur est correct
 
-const router = Router();
+const routerProduits = Router();
 
 // Récupérer tous les produits
-router.get("/", ProduitsController.getProduits);
+routerProduits.get("/", ProduitsController.getProduits);
 
-// Récupérer un produit par son ID
-router.get("/:id", ProduitsController.getProduitById);
+// Récupérer un produit par ID
+routerProduits.get("/:id", ProduitsController.getProduitById);
 
-// Récupérer un produit par son code produit
-router.get("/code/:code_produit", ProduitsController.getProduitByCodeProduit);
+// Ajouter un nouveau produit
+routerProduits.post("/", ProduitsController.createProduit);
 
-// Récupérer un produit par son id type
-router.get("/type/:id_type", ProduitsController.getProduitByIdType);
+// Mettre à jour les informations d'un produit
+routerProduits.put("/:id", ProduitsController.updateProduit);
 
-// Récupérer un produit par son id succursale
-router.get("/succursale/:id_succursale", ProduitsController.getProduitByIdSuccursale);
+// Supprimer un produit
+routerProduits.delete("/:id", ProduitsController.deleteProduit);
 
-// Créer un nouveau produit
-router.post("/", ProduitsController.createProduit);
+// Récupérer les produits par catégorie
+routerProduits.get("/categorie/:categorieId", ProduitsController.getProduitsByCategorie);
 
-// Mettre à jour un produit existant
-router.put("/:id", ProduitsController.updateProduit);
+// Récupérer les produits par succursale
+routerProduits.get("/succursale/:succursaleId", ProduitsController.getProduitsBySuccursale);
 
-// Supprimer un produit existant
-router.delete("/:id", ProduitsController.deleteProduit);
-
-export default router;
+export default routerProduits;
