@@ -3,6 +3,9 @@ import express, { json, urlencoded } from "express";
 import helmet from "helmet";
 import compression from "compression";
 import cors from "cors";
+import morgan from "morgan";
+
+import logger from "./configuration/logger.js";
 
 import routerAchats from "./router/achatsRoute.js";
 import routerAnalysesVentes from "./router/analysesVentesRoute.js";
@@ -33,6 +36,7 @@ import routerVentes from "./router/ventesRoute.js";
 
 
 
+
 // Création du serveur
 const app = express();
 
@@ -42,6 +46,10 @@ app.use(compression());
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: false }));
+
+// Configuration de Morgan pour le logging des requêtes HTTP
+app.use(morgan("combined", { stream: logger.stream }));
+
 
 // Ajouter des routes
 app.use("/achats", routerAchats);
