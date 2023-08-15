@@ -209,6 +209,7 @@ CREATE TABLE `commandes_fournisseurs` (
   `id_achat` int(11) NOT NULL,
   `id_produit` int(11) NOT NULL,
   `quantite` int(11) NOT NULL,
+  `prix_achats` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_achat` (`id_achat`),
   KEY `id_produit` (`id_produit`),

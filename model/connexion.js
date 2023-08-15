@@ -1,16 +1,16 @@
 import mysql from 'mysql2';
 
 const config = {
-    user: 'root',
-    password: 'root',
-    host: 'localhost',
-    socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-    database: 'aml_db',
-    multipleStatements: true
-  };
-  
+  user: 'root',
+  password: 'root',
+  host: 'localhost',
+  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+  database: 'aml_db',
+  multipleStatements: true
+};
 
-  const connection = mysql.createConnection(config);
+
+const connection = mysql.createConnection(config);
 
 connection.connect((error) => {
   if (error) {
@@ -20,5 +20,6 @@ connection.connect((error) => {
   }
 });
 
-
-export {connection}
+export {
+  connection
+}

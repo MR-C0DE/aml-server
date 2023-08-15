@@ -33,8 +33,6 @@ import routerVentes from "./router/ventesRoute.js";
 
 
 
-
-
 // Création du serveur
 const app = express();
 

@@ -15,10 +15,10 @@ class CommandesFournisseurs {
     });
   }
 
-  static insertCommandeFournisseur(id_achat, id_produit, quantite) {
+  static insertCommandeFournisseur(id_achat, id_produit, quantite, prix_achats) {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO commandes_fournisseurs (id_achat, id_produit, quantite) VALUES (?, ?, ?)";
-      const values = [id_achat, id_produit, quantite];
+      const query = "INSERT INTO commandes_fournisseurs (id_achat, id_produit, quantite, prix_achats) VALUES (?, ?, ?, ?)";
+      const values = [id_achat, id_produit, quantite, prix_achats];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
@@ -31,10 +31,10 @@ class CommandesFournisseurs {
     });
   }
 
-  static updateCommandeFournisseur(id, id_achat, id_produit, quantite) {
+  static updateCommandeFournisseur(id, id_achat, id_produit, quantite, prix_achats) {
     return new Promise((resolve, reject) => {
-      const query = "UPDATE commandes_fournisseurs SET id_achat = ?, id_produit = ?, quantite = ? WHERE id = ?";
-      const values = [id_achat, id_produit, quantite, id];
+      const query = "UPDATE commandes_fournisseurs SET id_achat = ?, id_produit = ?, quantite = ?, prix_achats = ? WHERE id = ?";
+      const values = [id_achat, id_produit, quantite, prix_achats, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
