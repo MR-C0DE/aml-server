@@ -1,10 +1,11 @@
 import { Router } from "express";
+import AuthUtils from "../configuration/auth.js";
 import { AchatsController } from "../controller/achatsController.js";
 
 const routerAchats = Router();
 
 // Récupérer tous les achats
-routerAchats.get("/", AchatsController.getAchats);
+routerAchats.get("/", AuthUtils.authenticateToken, AchatsController.getAchats);
 
 // Récupérer un achat par ID
 routerAchats.get("/:id", AchatsController.getAchatById);

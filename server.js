@@ -34,6 +34,9 @@ import routerUnitesMonetaires from "./router/unitesMonetairesRoute.js";
 import routerUtilisateurs from "./router/utilisateursRoute.js";
 import routerVentes from "./router/ventesRoute.js";
 
+import AuthUtils from "./configuration/auth.js";
+import routerLogin from "./router/loginRoute.js";
+
 
 
 
@@ -51,33 +54,36 @@ app.use(urlencoded({ extended: false }));
 app.use(morgan("combined", { stream: logger.stream }));
 
 
+
 // Ajouter des routes
-app.use("/achats", routerAchats);
-app.use("/analysesVentes", routerAnalysesVentes);
-app.use("/categoriesProduits", routerCategoriesProduits);
-app.use("/clients", routerClients);
-app.use("/commandesFournisseurs", routerCommandesFournisseurs);
-app.use("/detailVentes", routerDetailsVentes);
-app.use("/employes", routerEmployes);
-app.use("/entreprises", routerEntreprises);
-app.use("/factures", routerFactures);
-app.use("/fournisseurs", routerFournisseurs);
-app.use("/historiquePrix", routerHistoriquePrix);
-app.use("/historiquesModifications", routerHistoriqueModifications);
-app.use("/journalisationsOperations", routerJournalisationsOperations);
-app.use("/notesInternes", routerNotesInternes);
-app.use("/presencesEmployes", routerPresencesEmployes);
-app.use("/produits", routerProduits);
-app.use("/retoursProduits", routerRetoursProduits);
-app.use("/succursales", routerSuccursales);
-app.use("/transactions", routerTransactions);
-app.use("/transactionsCaisse", routerTransactionsCaisse);
-app.use("/transfertsProduits", routerTransfertsProduits);
-app.use("/typeEmployes", routerTypeEmployes);
-app.use("/typeSuccursales", routerTypeSuccursales);
-app.use("/unitesMonetaires", routerUnitesMonetaires);
-app.use("/utilisateurs", routerUtilisateurs);
-app.use("/ventes", routerVentes);
+app.use("/achats", AuthUtils.authenticateToken, routerAchats);
+app.use("/analysesVentes", AuthUtils.authenticateToken, routerAnalysesVentes);
+app.use("/categoriesProduits", AuthUtils.authenticateToken, routerCategoriesProduits);
+app.use("/clients", AuthUtils.authenticateToken, routerClients);
+app.use("/commandesFournisseurs", AuthUtils.authenticateToken, routerCommandesFournisseurs);
+app.use("/detailVentes", AuthUtils.authenticateToken, routerDetailsVentes);
+app.use("/employes", AuthUtils.authenticateToken, routerEmployes);
+app.use("/entreprises", AuthUtils.authenticateToken, routerEntreprises);
+app.use("/factures", AuthUtils.authenticateToken, routerFactures);
+app.use("/fournisseurs", AuthUtils.authenticateToken, routerFournisseurs);
+app.use("/historiquePrix", AuthUtils.authenticateToken, routerHistoriquePrix);
+app.use("/historiquesModifications", AuthUtils.authenticateToken, routerHistoriqueModifications);
+app.use("/journalisationsOperations", AuthUtils.authenticateToken, routerJournalisationsOperations);
+app.use("/notesInternes", AuthUtils.authenticateToken, routerNotesInternes);
+app.use("/presencesEmployes", AuthUtils.authenticateToken, routerPresencesEmployes);
+app.use("/produits", AuthUtils.authenticateToken, routerProduits);
+app.use("/retoursProduits", AuthUtils.authenticateToken, routerRetoursProduits);
+app.use("/succursales", AuthUtils.authenticateToken, routerSuccursales);
+app.use("/transactions", AuthUtils.authenticateToken, routerTransactions);
+app.use("/transactionsCaisse", AuthUtils.authenticateToken, routerTransactionsCaisse);
+app.use("/transfertsProduits", AuthUtils.authenticateToken, routerTransfertsProduits);
+app.use("/typeEmployes", AuthUtils.authenticateToken, routerTypeEmployes);
+app.use("/typeSuccursales", AuthUtils.authenticateToken, routerTypeSuccursales);
+app.use("/unitesMonetaires", AuthUtils.authenticateToken, routerUnitesMonetaires);
+app.use("/utilisateurs", AuthUtils.authenticateToken, routerUtilisateurs);
+app.use("/ventes", AuthUtils.authenticateToken, routerVentes);
+app.use("/login", routerLogin);
+
 
 // Démarrage du serveur
 app.listen(process.env.PORT);
