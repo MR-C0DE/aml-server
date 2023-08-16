@@ -1,6 +1,6 @@
 # Ignore les fichiers et dossiers spécifiques à Node.js
 node_modules/
-
+model/connexion.js
 # Ignore les fichiers de configuration pour certains outils
 npm-debug.log*
 yarn-debug.log*

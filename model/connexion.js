@@ -2,9 +2,7 @@ import mysql from 'mysql2';
 
 const config = {
     user: 'root',
-    password: 'root',
     host: 'localhost',
-    socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     database: 'aml_db',
     multipleStatements: true
   };
