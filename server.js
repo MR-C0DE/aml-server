@@ -36,6 +36,7 @@ import routerVentes from "./router/ventesRoute.js";
 
 import AuthUtils from "./configuration/auth.js";
 import routerLogin from "./router/loginRoute.js";
+import limiter from "./configuration/rateLimitConfig.js";
 
 
 
@@ -50,6 +51,8 @@ app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
+app.use(limiter); // Appliquer les limites de taux d'appels
+
 // Configuration de Morgan pour le logging des requêtes HTTP
 app.use(morgan("combined", { stream: logger.stream }));
 
@@ -63,7 +66,7 @@ app.use("/clients", AuthUtils.authenticateToken, routerClients);
 app.use("/commandesFournisseurs", AuthUtils.authenticateToken, routerCommandesFournisseurs);
 app.use("/detailVentes", AuthUtils.authenticateToken, routerDetailsVentes);
 app.use("/employes", AuthUtils.authenticateToken, routerEmployes);
-app.use("/entreprises", AuthUtils.authenticateToken, routerEntreprises);
+app.use("/entreprises", routerEntreprises);
 app.use("/factures", AuthUtils.authenticateToken, routerFactures);
 app.use("/fournisseurs", AuthUtils.authenticateToken, routerFournisseurs);
 app.use("/historiquePrix", AuthUtils.authenticateToken, routerHistoriquePrix);

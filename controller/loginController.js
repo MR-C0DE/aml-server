@@ -6,7 +6,8 @@ class LoginController {
       id: 1,
     };
 
-    response.send(AuthUtils.generateToken(user));
+    const res = AuthUtils.generateToken(user)
+    response.status(201).json({token: res});
   }
 }
 

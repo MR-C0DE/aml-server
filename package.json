@@ -11,10 +11,12 @@
   "author": "Andre Mulaja",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-rate-limit": "^6.9.0",
     "helmet": "^6.1.5",
     "jsonwebtoken": "^9.0.1",
     "morgan": "^1.10.0",
