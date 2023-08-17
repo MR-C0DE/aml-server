@@ -81,6 +81,7 @@ CREATE TABLE `succursales` (
 
 CREATE TABLE `employes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `matricule` varchar(50) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `salaire` decimal(10,2) NOT NULL,
   `date_embauche` date NOT NULL,
@@ -91,9 +92,10 @@ CREATE TABLE `employes` (
   KEY `type_employe` (`type_employe`),
   KEY `id_entreprise` (`id_entreprise`),
   CONSTRAINT `employes_ibfk_1` FOREIGN KEY (`type_employe`) REFERENCES `type_employes` (`id`),
-  CONSTRAINT `employes_ibfk_2` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`)
-
+  CONSTRAINT `employes_ibfk_2` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`),
+  CONSTRAINT `unique_matricule_per_company` UNIQUE (`matricule`, `id_entreprise`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -276,7 +278,6 @@ CREATE TABLE `transactions_caisse` (
 
 CREATE TABLE `utilisateurs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `matricule` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `statut` varchar(50) NOT NULL,
   `id_employe` int(11) NOT NULL,

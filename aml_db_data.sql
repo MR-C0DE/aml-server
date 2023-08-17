@@ -39,12 +39,12 @@ INSERT INTO succursales (nom, adresse, ville, code_emplacement, pays, telephone,
 ('Boutique Londres', '456 Fashion Road', 'Londres', 'SW1A 1AA', 'Royaume-Uni', '+44 20 5678 1234', 'boutique@fashiontrends.co.uk', 5, 2);
 
 -- Insertions pour la table employes
-INSERT INTO employes (nom, salaire, date_embauche, statut, type_employe, id_entreprise) VALUES
-('Jean Dupont', 4500.00, '2022-01-15', 'Actif', 1, 1),
-('Sophie Martin', 3200.00, '2022-02-28', 'Actif', 2, 2),
-('Pierre Lambert', 2800.00, '2022-03-10', 'Actif', 2, 2),
-('Marie Dubois', 2400.00, '2022-04-05', 'Actif', 3, 3),
-('David Smith', 2600.00, '2022-05-20', 'Actif', 3, 4);
+INSERT INTO employes (matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise) VALUES
+('ACS900','Jean Dupont', 4500.00, '2022-01-15', 'Actif', 1, 1),
+('WAZ234', 'Sophie Martin', 3200.00, '2022-02-28', 'Actif', 2, 2),
+('CVX342', 'Pierre Lambert', 2800.00, '2022-03-10', 'Actif', 2, 2),
+('BNM385', 'Marie Dubois', 2400.00, '2022-04-05', 'Actif', 3, 3),
+('SOX098', 'David Smith', 2600.00, '2022-05-20', 'Actif', 3, 4);
 
 -- Insertions pour la table fournisseurs
 INSERT INTO fournisseurs (nom, adresse, telephone, email, id_entreprise) VALUES
@@ -127,12 +127,12 @@ INSERT INTO transactions_caisse (id_succursale, id_employe, montant, type, descr
 (2, 1, 80.00, 'Sortie', 'Achat de collations', '2022-06-15 13:45:00');
 
 -- Insertions pour la table utilisateurs
-INSERT INTO utilisateurs (matricule, password, statut, id_employe) VALUES
-('MAT001', 'pass123', 'Actif', 1),
-('MAT002', 'secure456', 'Actif', 2),
-('MAT003', 'password789', 'Actif', 3),
-('MAT004', 'secret321', 'Actif', 4),
-('MAT005', 'confidential987', 'Actif', 5);
+INSERT INTO utilisateurs (password, statut, id_employe) VALUES
+('pass123', 'Actif', 1),
+('secure456', 'Actif', 2),
+('password789', 'Actif', 3),
+('secret321', 'Actif', 4),
+('confidential987', 'Actif', 5);
 
 -- Insertions pour la table notes_internes
 INSERT INTO notes_internes (sujet, contenu, date_creation, id_auteur, id_succursale) VALUES

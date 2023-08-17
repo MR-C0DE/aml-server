@@ -1,5 +1,5 @@
 import { Achats } from "../model/achats.js";
-
+import { validationResult } from "express-validator";
 class AchatsController {
   static async getAchats(request, response) {
     try {
@@ -12,11 +12,22 @@ class AchatsController {
   }
 
   static async createAchat(request, response) {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
     const { date_achat, id_fournisseur, montant_total } = request.body;
 
     try {
-      const result = await Achats.insertAchat(date_achat, id_fournisseur, montant_total);
-      response.status(201).json({ message: "Achat created successfully.", id: result.insertId });
+      const result = await Achats.insertAchat(
+        date_achat,
+        id_fournisseur,
+        montant_total
+      );
+      response
+        .status(201)
+        .json({ message: "Achat created successfully.", id: result.insertId });
     } catch (error) {
       console.error(error);
       response.status(500).send("Error creating achat.");
@@ -24,13 +35,25 @@ class AchatsController {
   }
 
   static async updateAchat(request, response) {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
     const { id } = request.params;
     const { date_achat, id_fournisseur, montant_total } = request.body;
 
     try {
-      const result = await Achats.updateAchat(id, date_achat, id_fournisseur, montant_total);
+      const result = await Achats.updateAchat(
+        id,
+        date_achat,
+        id_fournisseur,
+        montant_total
+      );
       if (result.affectedRows === 0) {
-        response.status(404).json({ message: `Achat with ID ${id} not found.` });
+        response
+          .status(404)
+          .json({ message: `Achat with ID ${id} not found.` });
       } else {
         response.status(200).json({ message: "Achat updated successfully." });
       }
@@ -41,12 +64,19 @@ class AchatsController {
   }
 
   static async deleteAchat(request, response) {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
     const { id } = request.params;
 
     try {
       const result = await Achats.deleteAchat(id);
       if (result.affectedRows === 0) {
-        response.status(404).json({ message: `Achat with ID ${id} not found.` });
+        response
+          .status(404)
+          .json({ message: `Achat with ID ${id} not found.` });
       } else {
         response.status(200).json({ message: "Achat deleted successfully." });
       }
@@ -57,12 +87,19 @@ class AchatsController {
   }
 
   static async getAchatById(request, response) {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
     const { id } = request.params;
 
     try {
       const achat = await Achats.getAchatById(id);
       if (!achat) {
-        response.status(404).json({ message: `Achat with ID ${id} not found.` });
+        response
+          .status(404)
+          .json({ message: `Achat with ID ${id} not found.` });
       } else {
         response.status(200).json(achat);
       }
@@ -73,6 +110,11 @@ class AchatsController {
   }
 
   static async getAchatsByFournisseur(request, response) {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
     const { fournisseurId } = request.params;
 
     try {

@@ -12,9 +12,9 @@ class EmployesController {
   }
 
   static async createEmploye(request, response) {
-    const { nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
+    const { matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
     try {
-      const result = await Employes.insertEmploye(nom, salaire, date_embauche, statut, type_employe, id_entreprise);
+      const result = await Employes.insertEmploye(matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise);
       response.status(201).json(result);
     } catch (error) {
       console.error(error);
@@ -24,9 +24,9 @@ class EmployesController {
 
   static async updateEmploye(request, response) {
     const { id } = request.params;
-    const { nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
+    const { matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
     try {
-      const result = await Employes.updateEmploye(id, nom, salaire, date_embauche, statut, type_employe, id_entreprise);
+      const result = await Employes.updateEmploye(id, matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise);
       response.status(200).json(result);
     } catch (error) {
       console.error(error);

@@ -46,13 +46,13 @@ class UtilisateursController {
 
   // Crée un nouvel utilisateur
   static async createUtilisateur(request, response) {
-    const { matricule, password, statut, id_employe } = request.body;
+    const { password, statut, id_employe } = request.body;
     try {
       // Cryptage du mot de passe
       const hashedPassword = await bcrypt.hash(password, 10); // Utilisation d'un salt de 10
 
       // Insertion de l'utilisateur dans la base de données avec le mot de passe crypté
-      const utilisateur = await Utilisateurs.insertUtilisateur(matricule, hashedPassword, statut, id_employe);
+      const utilisateur = await Utilisateurs.insertUtilisateur(hashedPassword, statut, id_employe);
       response.status(201).json(utilisateur);
     } catch (error) {
       console.error(error);

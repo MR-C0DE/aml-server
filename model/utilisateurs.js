@@ -18,11 +18,11 @@ class Utilisateurs {
     });
   }
 
-  static insertUtilisateur(matricule, password, statut, id_employe) {
+  static insertUtilisateur( password, statut, id_employe) {
     return new Promise((resolve, reject) => {
       const query =
-        "INSERT INTO utilisateurs (matricule, password, statut, id_employe) VALUES (?, ?, ?, ?)";
-      const values = [matricule, password, statut, id_employe];
+        "INSERT INTO utilisateurs ( password, statut, id_employe) VALUES (?, ?, ?)";
+      const values = [ password, statut, id_employe];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
@@ -35,11 +35,11 @@ class Utilisateurs {
     });
   }
 
-  static updateUtilisateur(id, matricule, password, statut, id_employe) {
+  static updateUtilisateur(id, password, statut, id_employe) {
     return new Promise((resolve, reject) => {
       const query =
-        "UPDATE utilisateurs SET matricule = ?, password = ?, statut = ?, id_employe = ? WHERE id = ?";
-      const values = [matricule, password, statut, id_employe, id];
+        "UPDATE utilisateurs SET password = ?, statut = ?, id_employe = ? WHERE id = ?";
+      const values = [ password, statut, id_employe, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);

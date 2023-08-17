@@ -12,6 +12,7 @@ class AnalysesVentesController {
   }
 
   static async createAnalysesVente(request, response) {
+    
     const venteData = request.body;
 
     try {
