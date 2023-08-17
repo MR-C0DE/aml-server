@@ -18,11 +18,11 @@ class Utilisateurs {
     });
   }
 
-  static insertUtilisateur( password, statut, id_employe) {
+  static insertUtilisateur(password, statut, id_employe) {
     return new Promise((resolve, reject) => {
       const query =
         "INSERT INTO utilisateurs ( password, statut, id_employe) VALUES (?, ?, ?)";
-      const values = [ password, statut, id_employe];
+      const values = [password, statut, id_employe];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
@@ -39,7 +39,7 @@ class Utilisateurs {
     return new Promise((resolve, reject) => {
       const query =
         "UPDATE utilisateurs SET password = ?, statut = ?, id_employe = ? WHERE id = ?";
-      const values = [ password, statut, id_employe, id];
+      const values = [password, statut, id_employe, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
@@ -87,6 +87,31 @@ class Utilisateurs {
   }
 
   // Additional methods
+
+  static getUtilisateurByMatricule(matricule) {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `
+        SELECT u.*, e.*, u.statut AS statut_utilisateur, t.nom AS type_nom, t.description AS type_description
+        FROM utilisateurs u
+        INNER JOIN employes e ON u.id_employe = e.id
+        INNER JOIN type_employes t ON e.type_employe = t.id
+        WHERE e.matricule = ?
+      `,
+
+        [matricule],
+        (error, results, fields) => {
+          if (error) {
+            console.error("Error executing query:", error);
+            reject(error);
+          } else {
+            console.log("Query results:", results);
+            resolve(results[0]);
+          }
+        }
+      );
+    });
+  }
 
   // You can add more methods here based on your requirements
 }
