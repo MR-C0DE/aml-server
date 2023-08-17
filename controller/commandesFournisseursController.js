@@ -12,10 +12,10 @@ class CommandesFournisseursController {
   }
 
   static async createCommandeFournisseur(request, response) {
-    const { id_achat, id_produit, quantite } = request.body;
+    const { id_achat, id_produit, quantite, prix_achats } = request.body;
 
     try {
-      const result = await CommandesFournisseurs.insertCommandeFournisseur(id_achat, id_produit, quantite);
+      const result = await CommandesFournisseurs.insertCommandeFournisseur(id_achat, id_produit, quantite, prix_achats);
       response.status(201).json({ message: "Commande fournisseur created successfully.", id: result.insertId });
     } catch (error) {
       console.error(error);
@@ -25,10 +25,10 @@ class CommandesFournisseursController {
 
   static async updateCommandeFournisseur(request, response) {
     const { id } = request.params;
-    const { id_achat, id_produit, quantite } = request.body;
+    const { id_achat, id_produit, quantite, prix_achats } = request.body;
 
     try {
-      const result = await CommandesFournisseurs.updateCommandeFournisseur(id, id_achat, id_produit, quantite);
+      const result = await CommandesFournisseurs.updateCommandeFournisseur(id, id_achat, id_produit, quantite, prix_achats);
       if (result.affectedRows === 0) {
         response.status(404).json({ message: `Commande fournisseur with ID ${id} not found.` });
       } else {

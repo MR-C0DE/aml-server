@@ -1,14 +1,14 @@
 import mysql from 'mysql2';
 
 const config = {
-    user: 'root',
-    host: 'localhost',
-    database: 'aml_db',
-    multipleStatements: true
-  };
-  
+  user: 'root',
+  host: 'localhost',
+  database: 'aml_db',
+  multipleStatements: true
+};
 
-  const connection = mysql.createConnection(config);
+
+const connection = mysql.createConnection(config);
 
 connection.connect((error) => {
   if (error) {
@@ -18,5 +18,6 @@ connection.connect((error) => {
   }
 });
 
-
-export {connection}
+export {
+  connection
+}
