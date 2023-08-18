@@ -19,11 +19,10 @@ class EntreprisesController {
       adresse,
       telephone,
       email,
-      site_web,
-      matricule,
-      statut,
+      site_web
     } = request.body;
-
+    const statut = "En attente";
+    const matricule = await Entreprises.generateUniqueMatricule();
     try {
       const result = await Entreprises.insertEntreprise(
         nom,

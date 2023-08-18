@@ -51,12 +51,14 @@ app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
+
+
 app.use(limiter); // Appliquer les limites de taux d'appels
 
 // Configuration de Morgan pour le logging des requêtes HTTP
 app.use(morgan("combined", { stream: logger.stream }));
 
-
+app.use(AuthUtils.authenticateApiKey)
 
 // Ajouter des routes
 app.use("/achats", AuthUtils.authenticateToken, routerAchats);

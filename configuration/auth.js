@@ -37,6 +37,14 @@ class AuthUtils {
       }
     };
   }
+
+  static authenticateApiKey(request, response, next) {
+    const apiKey = request.headers["x-api-key"];
+    if (!apiKey || apiKey !== process.env.API_KEY) {
+      return response.status(401).json({ message: "Invalid API key" });
+    }
+    next();
+  }
 }
 
 export default AuthUtils;

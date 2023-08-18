@@ -14,7 +14,7 @@ class EmployesController {
   static async createEmploye(request, response) {
     const { matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
     try {
-      const result = await Employes.insertEmploye(matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise);
+      const result = await Employes.insertEmploye(matricule, nom, salaire, date_embauche, "En attente", type_employe, id_entreprise);
       response.status(201).json(result);
     } catch (error) {
       console.error(error);

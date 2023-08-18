@@ -4,7 +4,7 @@ class AchatsController {
   static async getAchats(request, response) {
     try {
       const achats = await Achats.selectAchats();
-      response.status(200).json({achats});
+      response.status(200).json(achats);
     } catch (error) {
       console.error(error);
       response.status(500).send("Error getting achats.");

@@ -22,11 +22,11 @@ def envoyer_requete(url, donnees=None, method='GET', headers=None):
         return None
 
 # Exemple d'utilisation
-api_url = 'http://127.0.0.1:4000/achats'
+api_url = 'http://127.0.0.1:4000/utilisateurs'
 donnees = {'parametre1': 'valeur1', 'parametre2': 'valeur2'}
-headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyMjMwODM2LCJleHAiOjE2OTIyMzQ0MzZ9.YKjztIstYhpH8TCd2cFptH3vMliNLWM0XmVgJL0e0Hg'}
+headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyMjk4ODQyLCJleHAiOjE2OTIzMDI0NDJ9.FByQhigBXKjWzEHkHSNIRNaITGsZ2T8Rm0zEvq1JYW8'}
 cpt = 0
-nbr_req = 1000000
+nbr_req = 1
 while cpt < nbr_req:
     response_data = envoyer_requete(api_url, donnees, method='GET', headers=headers)
 
