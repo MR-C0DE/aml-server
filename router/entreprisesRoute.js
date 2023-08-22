@@ -1,6 +1,7 @@
 import { Router } from "express";
 import AuthUtils from "../configuration/auth.js";
 import { EntreprisesController } from "../controller/entreprisesController.js";
+import EntreprisesValide from "../validation/entreprisesValide.js";
 
 const routerEntreprises = Router();
 
@@ -11,18 +12,18 @@ routerEntreprises.get("/", AuthUtils.authenticateToken, EntreprisesController.ge
 routerEntreprises.get("/:id", AuthUtils.authenticateToken, EntreprisesController.getEntrepriseById);
 
 // Récupérer les entreprises dans un pays spécifique
-routerEntreprises.get("/country/:country", AuthUtils.authenticateToken, EntreprisesController.getEntreprisesInCountry);
+routerEntreprises.get("/country/:country", EntreprisesValide.otherStringByParam('country') , AuthUtils.authenticateToken, EntreprisesController.getEntreprisesInCountry);
 
 // Récupérer les entreprises avec un statut spécifique
-routerEntreprises.get("/status/:status", AuthUtils.authenticateToken, EntreprisesController.getEntreprisesWithStatus);
+routerEntreprises.get("/status/:status",EntreprisesValide.otherStringByParam('status') , AuthUtils.authenticateToken, EntreprisesController.getEntreprisesWithStatus);
 
 // Ajouter une nouvelle entreprise
-routerEntreprises.post("/", EntreprisesController.createEntreprise);
+routerEntreprises.post("/", EntreprisesValide.updateEntreprise(), EntreprisesController.createEntreprise);
 
 // Mettre à jour les informations d'une entreprise
-routerEntreprises.put("/:id", AuthUtils.authenticateToken, EntreprisesController.updateEntreprise);
+routerEntreprises.put("/:id", EntreprisesValide.id(), AuthUtils.authenticateToken, EntreprisesController.updateEntreprise);
 
 // Supprimer une entreprise
-routerEntreprises.delete("/:id", AuthUtils.authenticateToken, EntreprisesController.deleteEntreprise);
+routerEntreprises.delete("/:id", EntreprisesValide.id(), AuthUtils.authenticateToken, EntreprisesController.deleteEntreprise);
 
 export default routerEntreprises;

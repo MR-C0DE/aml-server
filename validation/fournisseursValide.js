@@ -1,9 +1,9 @@
 import { body, param } from "express-validator";
 
 class FournisseursValide {
-  static id() {
+  static id(str) {
     return [
-      param("id")
+      param(str)
         .notEmpty()
         .isNumeric()
         .withMessage("L'ID du fournisseur doit être numérique et ne doit pas être vide"),

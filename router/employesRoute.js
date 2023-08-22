@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { EmployesController } from "../controller/employesController.js";
+import EmployesValide from "../validation/employesValide.js";
 
 const routerEmployes = Router();
 
@@ -7,15 +8,15 @@ const routerEmployes = Router();
 routerEmployes.get("/", EmployesController.getEmployes);
 
 // Récupérer un employé par ID
-routerEmployes.get("/:id", EmployesController.getEmployeById);
+routerEmployes.get("/:id", EmployesValide.id(), EmployesController.getEmployeById);
 
 // Ajouter un nouvel employé
-routerEmployes.post("/", EmployesController.createEmploye);
+routerEmployes.post("/", EmployesValide.createEmploye() , EmployesController.createEmploye);
 
 // Mettre à jour les informations d'un employé
-routerEmployes.put("/:id", EmployesController.updateEmploye);
+routerEmployes.put("/:id", EmployesValide.id(), EmployesController.updateEmploye);
 
 // Supprimer un employé
-routerEmployes.delete("/:id", EmployesController.deleteEmploye);
+routerEmployes.delete("/:id", EmployesValide.id(), EmployesController.deleteEmploye);
 
 export default routerEmployes;

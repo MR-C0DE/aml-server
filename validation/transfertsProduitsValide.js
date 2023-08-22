@@ -1,9 +1,9 @@
 import { body, param } from "express-validator";
 
 class TransfertsProduitsValide {
-  static id() {
+  static id(str) {
     return [
-      param("id")
+      param(str)
         .notEmpty()
         .isNumeric()
         .withMessage("L'ID du transfert de produit doit être numérique et ne doit pas être vide"),

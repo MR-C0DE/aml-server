@@ -11,7 +11,7 @@ routerCategoriesProduits.get("/", CategoriesProduitsController.getCategoriesProd
 routerCategoriesProduits.get("/:id",CategoriesProduitsValide.id(), CategoriesProduitsController.getCategorieProduitById);
 
 // Ajouter une nouvelle catégorie de produit
-routerCategoriesProduits.post("/", CategoriesProduitsController.createCategorieProduit);
+routerCategoriesProduits.post("/", CategoriesProduitsValide.createCategorieProduit(), CategoriesProduitsController.createCategorieProduit);
 
 // Mettre à jour les informations d'une catégorie de produit
 routerCategoriesProduits.put("/:id",CategoriesProduitsValide.id(), CategoriesProduitsController.updateCategorieProduit);

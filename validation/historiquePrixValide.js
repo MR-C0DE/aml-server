@@ -1,9 +1,9 @@
 import { body, param } from "express-validator";
 
 class HistoriquePrixValide {
-  static id() {
+  static id(str) {
     return [
-      param("id")
+      param(str)
         .notEmpty()
         .isNumeric()
         .withMessage("L'ID de l'historique de prix doit être numérique et ne doit pas être vide"),

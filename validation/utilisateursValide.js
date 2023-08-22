@@ -46,6 +46,15 @@ class UtilisateursValide {
         .withMessage("L'ID de l'employé doit être numérique et ne doit pas être vide"),
     ];
   }
+
+  static utilisateurByMatricule() {
+    return [
+      param("matricule")
+        .notEmpty()
+        .isNumeric()
+        .withMessage("L'ID de l'utilisateur doit être numérique et ne doit pas être vide"),
+    ];
+  }
 }
 
 export default UtilisateursValide;

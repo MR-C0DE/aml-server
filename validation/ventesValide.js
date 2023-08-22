@@ -1,9 +1,9 @@
 import { body, param } from "express-validator";
 
 class VentesValide {
-  static id() {
+  static id(str) {
     return [
-      param("id")
+      param(str)
         .notEmpty()
         .isNumeric()
         .withMessage(

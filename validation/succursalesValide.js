@@ -1,9 +1,9 @@
 import { body, param } from "express-validator";
 
-class SuccursalesValidation {
-  static id() {
+class SuccursalesValide {
+  static id(str) {
     return [
-      param("id")
+      param(str)
         .notEmpty()
         .isNumeric()
         .withMessage(
@@ -109,4 +109,4 @@ class SuccursalesValidation {
   }
 }
 
-export default SuccursalesValidation;
+export default SuccursalesValide;

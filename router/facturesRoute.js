@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { FacturesController } from "../controller/facturesController.js"; // Assurez-vous de fournir le chemin correct vers votre contrôleur FacturesController
+import FacturesValide from "../validation/facturesValide.js";
 
 const routerFactures = Router();
 
@@ -7,18 +8,18 @@ const routerFactures = Router();
 routerFactures.get("/", FacturesController.getFactures);
 
 // Récupérer une facture par ID
-routerFactures.get("/:id", FacturesController.getFactureById);
+routerFactures.get("/:id", FacturesValide.id(), FacturesController.getFactureById);
 
 // Récupérer les factures pour un client donné
-routerFactures.get("/client/:clientId", FacturesController.getFacturesForClient);
+routerFactures.get("/client/:clientId", FacturesValide.id(), FacturesController.getFacturesForClient);
 
 // Ajouter une nouvelle facture
-routerFactures.post("/", FacturesController.createFacture);
+routerFactures.post("/",FacturesValide.createFacture(), FacturesController.createFacture);
 
 // Mettre à jour les informations d'une facture
-routerFactures.put("/:id", FacturesController.updateFacture);
+routerFactures.put("/:id", FacturesValide.updateFacture(), FacturesController.updateFacture);
 
 // Supprimer une facture
-routerFactures.delete("/:id", FacturesController.deleteFacture);
+routerFactures.delete("/:id", FacturesValide.id(), FacturesController.deleteFacture);
 
 export default routerFactures;

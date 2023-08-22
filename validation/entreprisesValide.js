@@ -65,6 +65,17 @@ class EntreprisesValide {
       body("statut").notEmpty().withMessage("Le statut ne doit pas être vide"),
     ];
   }
+
+  static otherStringByParam(str) {
+    return [
+      param(str)
+        .notEmpty()
+        .isString()
+        .withMessage(
+          "Le '"+str+"' de l'entreprise doit être numérique et ne doit pas être vide"
+        ),
+    ];
+  }
 }
 
 export default EntreprisesValide;
