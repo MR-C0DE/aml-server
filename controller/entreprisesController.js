@@ -1,4 +1,5 @@
 import { Entreprises } from "../model/entreprises.js";
+import Validation from "../validation/validation.js";
 
 class EntreprisesController {
   static async getEntreprises(request, response) {
@@ -12,15 +13,13 @@ class EntreprisesController {
   }
 
   static async createEntreprise(request, response) {
-    const {
-      nom,
-      pays,
-      ville,
-      adresse,
-      telephone,
-      email,
-      site_web
-    } = request.body;
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
+    const { nom, pays, ville, adresse, telephone, email, site_web } =
+      request.body;
     const statut = "En attente";
     const matricule = await Entreprises.generateUniqueMatricule();
     try {
@@ -43,6 +42,11 @@ class EntreprisesController {
   }
 
   static async updateEntreprise(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const {
       id,
       nom,
@@ -77,6 +81,11 @@ class EntreprisesController {
   }
 
   static async deleteEntreprise(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -89,6 +98,11 @@ class EntreprisesController {
   }
 
   static async getEntrepriseById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -101,6 +115,11 @@ class EntreprisesController {
   }
 
   static async getEntreprisesInCountry(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { country } = request.params;
 
     try {
@@ -113,6 +132,11 @@ class EntreprisesController {
   }
 
   static async getEntreprisesWithStatus(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { status } = request.params;
 
     try {

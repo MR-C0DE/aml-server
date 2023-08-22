@@ -1,4 +1,5 @@
 import { Fournisseurs } from "../model/fournisseurs.js";
+import Validation from "../validation/validation.js";
 
 class FournisseursController {
   static async getFournisseurs(request, response) {
@@ -12,9 +13,20 @@ class FournisseursController {
   }
 
   static async createFournisseur(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { nom, adresse, telephone, email, id_entreprise } = request.body;
     try {
-      const result = await Fournisseurs.insertFournisseur(nom, adresse, telephone, email, id_entreprise);
+      const result = await Fournisseurs.insertFournisseur(
+        nom,
+        adresse,
+        telephone,
+        email,
+        id_entreprise
+      );
       response.status(201).json(result);
     } catch (error) {
       console.error(error);
@@ -23,10 +35,22 @@ class FournisseursController {
   }
 
   static async updateFournisseur(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     const { nom, adresse, telephone, email, id_entreprise } = request.body;
     try {
-      const result = await Fournisseurs.updateFournisseur(id, nom, adresse, telephone, email, id_entreprise);
+      const result = await Fournisseurs.updateFournisseur(
+        id,
+        nom,
+        adresse,
+        telephone,
+        email,
+        id_entreprise
+      );
       response.status(200).json(result);
     } catch (error) {
       console.error(error);
@@ -35,6 +59,11 @@ class FournisseursController {
   }
 
   static async deleteFournisseur(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       const result = await Fournisseurs.deleteFournisseur(id);
@@ -46,6 +75,11 @@ class FournisseursController {
   }
 
   static async getFournisseurById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       const fournisseur = await Fournisseurs.getFournisseurById(id);
@@ -57,9 +91,16 @@ class FournisseursController {
   }
 
   static async getFournisseursByEntreprise(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id_entreprise } = request.params;
     try {
-      const fournisseurs = await Fournisseurs.getFournisseursByEntreprise(id_entreprise);
+      const fournisseurs = await Fournisseurs.getFournisseursByEntreprise(
+        id_entreprise
+      );
       response.status(200).json(fournisseurs);
     } catch (error) {
       console.error(error);

@@ -1,4 +1,5 @@
 import { TransactionsCaisse } from "../model/transactionsCaisse.js";
+import Validation from "../validation/validation.js";
 
 class TransactionsCaisseController {
   static async getTransactionsCaisse(request, response) {
@@ -12,6 +13,11 @@ class TransactionsCaisseController {
   }
 
   static async createTransactionCaisse(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const data = request.body; // Assuming data is sent in the request body
       const result = await TransactionsCaisse.insertTransactionCaisse(data);
@@ -23,6 +29,11 @@ class TransactionsCaisseController {
   }
 
   static async updateTransactionCaisse(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const id = request.params.id; // Assuming the ID is in the URL parameter
       const data = request.body; // Assuming updated data is sent in the request body
@@ -35,6 +46,12 @@ class TransactionsCaisseController {
   }
 
   static async deleteTransactionCaisse(request, response) {
+
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const id = request.params.id; // Assuming the ID is in the URL parameter
       await TransactionsCaisse.deleteTransactionCaisse(id);
@@ -46,6 +63,10 @@ class TransactionsCaisseController {
   }
 
   static async getTransactionCaisseById(request, response) {
+    const errorValide = Validation.valide(request, response);
+    if (errorValide) {
+      return;
+    }
     try {
       const id = request.params.id; // Assuming the ID is in the URL parameter
       const transaction = await TransactionsCaisse.getTransactionCaisseById(id);
@@ -57,9 +78,16 @@ class TransactionsCaisseController {
   }
 
   static async getTransactionsByEmployee(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const employeeId = request.params.employeeId; // Assuming the employee ID is in the URL parameter
-      const transactions = await TransactionsCaisse.getTransactionsByEmployee(employeeId);
+      const transactions = await TransactionsCaisse.getTransactionsByEmployee(
+        employeeId
+      );
       response.status(200).json(transactions);
     } catch (error) {
       console.error(error);

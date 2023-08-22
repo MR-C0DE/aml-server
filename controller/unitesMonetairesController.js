@@ -1,4 +1,5 @@
 import { UnitesMonetaires } from "../model/unitesMonetaires.js"; // Update the path to match your model's location
+import Validation from "../validation/validation.js";
 
 class UnitesMonetairesController {
   static async getUnitesMonetaires(request, response) {
@@ -12,10 +13,21 @@ class UnitesMonetairesController {
   }
 
   static async createUniteMonetaire(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { code, nom, id_entreprise } = request.body;
     try {
-      const result = await UnitesMonetaires.insertUniteMonetaire(code, nom, id_entreprise);
-      response.status(201).json({ message: "Unite monetaire created successfully.", result });
+      const result = await UnitesMonetaires.insertUniteMonetaire(
+        code,
+        nom,
+        id_entreprise
+      );
+      response
+        .status(201)
+        .json({ message: "Unite monetaire created successfully.", result });
     } catch (error) {
       console.error(error);
       response.status(500).send("Error creating unite monetaire.");
@@ -23,29 +35,56 @@ class UnitesMonetairesController {
   }
 
   static async updateUniteMonetaire(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     const { code, nom, id_entreprise } = request.body;
     try {
       await UnitesMonetaires.updateUniteMonetaire(id, code, nom, id_entreprise);
-      response.status(200).json({ message: `Unite monetaire with ID ${id} updated successfully.` });
+      response
+        .status(200)
+        .json({
+          message: `Unite monetaire with ID ${id} updated successfully.`,
+        });
     } catch (error) {
       console.error(error);
-      response.status(500).send(`Error updating unite monetaire with ID ${id}.`);
+      response
+        .status(500)
+        .send(`Error updating unite monetaire with ID ${id}.`);
     }
   }
 
   static async deleteUniteMonetaire(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       await UnitesMonetaires.deleteUniteMonetaire(id);
-      response.status(200).json({ message: `Unite monetaire with ID ${id} deleted successfully.` });
+      response
+        .status(200)
+        .json({
+          message: `Unite monetaire with ID ${id} deleted successfully.`,
+        });
     } catch (error) {
       console.error(error);
-      response.status(500).send(`Error deleting unite monetaire with ID ${id}.`);
+      response
+        .status(500)
+        .send(`Error deleting unite monetaire with ID ${id}.`);
     }
   }
 
   static async getUniteMonetaireById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       const uniteMonetaire = await UnitesMonetaires.getUniteMonetaireById(id);
@@ -61,13 +100,23 @@ class UnitesMonetairesController {
   }
 
   static async getUnitesMonetairesForEnterprise(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { enterpriseId } = request.params;
     try {
-      const unitesMonetaires = await UnitesMonetaires.getUnitesMonetairesForEnterprise(enterpriseId);
+      const unitesMonetaires =
+        await UnitesMonetaires.getUnitesMonetairesForEnterprise(enterpriseId);
       response.status(200).json(unitesMonetaires);
     } catch (error) {
       console.error(error);
-      response.status(500).send(`Error getting unites monetaires for enterprise with ID ${enterpriseId}.`);
+      response
+        .status(500)
+        .send(
+          `Error getting unites monetaires for enterprise with ID ${enterpriseId}.`
+        );
     }
   }
 }

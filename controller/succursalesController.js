@@ -1,5 +1,5 @@
 import { Succursales } from "../model/succursales.js";
-
+import Validation from "../validation/validation.js";
 
 class SuccursalesController {
   static async getSuccursales(request, response) {
@@ -13,6 +13,11 @@ class SuccursalesController {
   }
 
   static async createSuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const succursaleData = request.body; // Assuming the request body contains the necessary data
       const result = await Succursales.insertSuccursale(succursaleData);
@@ -24,10 +29,18 @@ class SuccursalesController {
   }
 
   static async updateSuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const succursaleId = parseInt(request.params.id); // Assuming the ID is passed in the URL
       const succursaleData = request.body; // Assuming the request body contains the updated data
-      const result = await Succursales.updateSuccursale(succursaleId, succursaleData);
+      const result = await Succursales.updateSuccursale(
+        succursaleId,
+        succursaleData
+      );
       response.status(200).json(result);
     } catch (error) {
       console.error(error);
@@ -36,6 +49,11 @@ class SuccursalesController {
   }
 
   static async deleteSuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const succursaleId = parseInt(request.params.id); // Assuming the ID is passed in the URL
       const result = await Succursales.deleteSuccursale(succursaleId);
@@ -47,6 +65,11 @@ class SuccursalesController {
   }
 
   static async getSuccursaleById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const succursaleId = parseInt(request.params.id); // Assuming the ID is passed in the URL
       const succursale = await Succursales.getSuccursaleById(succursaleId);
@@ -58,6 +81,11 @@ class SuccursalesController {
   }
 
   static async getSuccursalesByType(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const typeId = parseInt(request.params.typeId); // Assuming the type ID is passed in the URL
       const succursales = await Succursales.getSuccursalesByType(typeId);

@@ -1,9 +1,11 @@
 import { PresencesEmployes } from "../model/presencesEmployes.js"; // Import the appropriate model
+import Validation from "../validation/validation.js";
 
 class PresencesEmployesController {
   static async getPresencesEmployes(request, response) {
     try {
-      const presencesEmployes = await PresencesEmployes.selectPresencesEmployes();
+      const presencesEmployes =
+        await PresencesEmployes.selectPresencesEmployes();
       response.status(200).json(presencesEmployes);
     } catch (error) {
       console.error(error);
@@ -12,7 +14,13 @@ class PresencesEmployesController {
   }
 
   static async createPresenceEmploye(request, response) {
-    const { id_succursale, id_employe, heure_arrivee, heure_depart } = request.body;
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
+    const { id_succursale, id_employe, heure_arrivee, heure_depart } =
+      request.body;
     try {
       const result = await PresencesEmployes.insertPresenceEmploye(
         id_succursale,
@@ -28,8 +36,14 @@ class PresencesEmployesController {
   }
 
   static async updatePresenceEmploye(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
-    const { id_succursale, id_employe, heure_arrivee, heure_depart } = request.body;
+    const { id_succursale, id_employe, heure_arrivee, heure_depart } =
+      request.body;
     try {
       const result = await PresencesEmployes.updatePresenceEmploye(
         id,
@@ -46,6 +60,11 @@ class PresencesEmployesController {
   }
 
   static async deletePresenceEmploye(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       const result = await PresencesEmployes.deletePresenceEmploye(id);
@@ -57,9 +76,16 @@ class PresencesEmployesController {
   }
 
   static async getPresenceEmployeById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
-      const presenceEmploye = await PresencesEmployes.getPresenceEmployeById(id);
+      const presenceEmploye = await PresencesEmployes.getPresenceEmployeById(
+        id
+      );
       response.status(200).json(presenceEmploye);
     } catch (error) {
       console.error(error);
@@ -68,9 +94,16 @@ class PresencesEmployesController {
   }
 
   static async getPresencesForEmployee(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { employeeId } = request.params;
     try {
-      const presences = await PresencesEmployes.getPresencesForEmployee(employeeId);
+      const presences = await PresencesEmployes.getPresencesForEmployee(
+        employeeId
+      );
       response.status(200).json(presences);
     } catch (error) {
       console.error(error);
@@ -79,9 +112,16 @@ class PresencesEmployesController {
   }
 
   static async getPresencesForSuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { succursaleId } = request.params;
     try {
-      const presences = await PresencesEmployes.getPresencesForSuccursale(succursaleId);
+      const presences = await PresencesEmployes.getPresencesForSuccursale(
+        succursaleId
+      );
       response.status(200).json(presences);
     } catch (error) {
       console.error(error);

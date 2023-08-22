@@ -1,4 +1,5 @@
 import { Employes } from "../model/employes.js";
+import Validation from "../validation/validation.js";
 
 class EmployesController {
   static async getEmployes(request, response) {
@@ -12,9 +13,30 @@ class EmployesController {
   }
 
   static async createEmploye(request, response) {
-    const { matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
+    const {
+      matricule,
+      nom,
+      salaire,
+      date_embauche,
+      type_employe,
+      id_entreprise,
+    } = request.body;
+    const STATUT = "En attente";
     try {
-      const result = await Employes.insertEmploye(matricule, nom, salaire, date_embauche, "En attente", type_employe, id_entreprise);
+      const result = await Employes.insertEmploye(
+        matricule,
+        nom,
+        salaire,
+        date_embauche,
+        STATUT,
+        type_employe,
+        id_entreprise
+      );
       response.status(201).json(result);
     } catch (error) {
       console.error(error);
@@ -23,10 +45,32 @@ class EmployesController {
   }
 
   static async updateEmploye(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
-    const { matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise } = request.body;
+    const {
+      matricule,
+      nom,
+      salaire,
+      date_embauche,
+      statut,
+      type_employe,
+      id_entreprise,
+    } = request.body;
     try {
-      const result = await Employes.updateEmploye(id, matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise);
+      const result = await Employes.updateEmploye(
+        id,
+        matricule,
+        nom,
+        salaire,
+        date_embauche,
+        statut,
+        type_employe,
+        id_entreprise
+      );
       response.status(200).json(result);
     } catch (error) {
       console.error(error);
@@ -35,6 +79,7 @@ class EmployesController {
   }
 
   static async deleteEmploye(request, response) {
+    Validation.valide(request, response);
     const { id } = request.params;
     try {
       const result = await Employes.deleteEmploye(id);
@@ -46,6 +91,11 @@ class EmployesController {
   }
 
   static async getEmployeById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       const employe = await Employes.getEmployeById(id);
@@ -57,6 +107,11 @@ class EmployesController {
   }
 
   static async getEmployesByType(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { typeId } = request.params;
     try {
       const employes = await Employes.getEmployesByType(typeId);

@@ -2,7 +2,6 @@ import { body, param } from "express-validator";
 
 class AchatsValide {
   static id() {
-      console.log("La validation");
     return [
       param("id")
         .notEmpty()
@@ -18,7 +17,7 @@ class AchatsValide {
 
       body("date_achat")
         .notEmpty()
-        .isDate()
+        .isString()
         .withMessage(
           "La date d'achat doit être une date valide et ne doit pas être vide"
         ),

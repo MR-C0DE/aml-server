@@ -5,7 +5,7 @@ class AuthUtils {
     const payload = {
       ...user
     };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "10h" });
     return token;
   }
 

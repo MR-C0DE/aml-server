@@ -1,7 +1,9 @@
 import { AnalysesVentes } from "../model/analysesVentes.js";
+import Validation from "../validation/validation.js";
 
 class AnalysesVentesController {
   static async getAnalysesVentes(request, response) {
+
     try {
       const analysesVentes = await AnalysesVentes.selectAnalysesVentes();
       response.status(200).json(analysesVentes);
@@ -12,6 +14,11 @@ class AnalysesVentesController {
   }
 
   static async createAnalysesVente(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     
     const venteData = request.body;
 
@@ -25,6 +32,11 @@ class AnalysesVentesController {
   }
 
   static async updateAnalysesVente(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const { id } = request.params;
     const venteData = request.body;
 
@@ -42,6 +54,11 @@ class AnalysesVentesController {
   }
 
   static async deleteAnalysesVente(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -58,6 +75,11 @@ class AnalysesVentesController {
   }
 
   static async getAnalysesVenteById(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -75,6 +97,11 @@ class AnalysesVentesController {
 
   // Additional methods
   static async getVentesByMonth(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const { monthYear } = request.params;
 
     try {

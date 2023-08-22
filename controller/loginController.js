@@ -1,6 +1,7 @@
 import AuthUtils from "../configuration/auth.js";
 import { Utilisateurs } from "../model/utilisateurs.js";
 import bcrypt from 'bcrypt';
+import Validation from "../validation/validation.js";
 
 class LoginController {
   static async connect(request, response) {
@@ -17,6 +18,11 @@ class LoginController {
   }
 
   static async connexion(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const userData = request.body;
 
     if (!userData || !userData.matricule || !userData.password) {

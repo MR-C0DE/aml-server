@@ -1,4 +1,5 @@
 import { TypeSuccursales } from "../model/typeSuccursales.js";
+import Validation from "../validation/validation.js";
 
 class TypeSuccursalesController {
   static async getTypeSuccursales(request, response) {
@@ -12,6 +13,11 @@ class TypeSuccursalesController {
   }
 
   static async createTypeSuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { entite } = request.body;
       if (!entite) {
@@ -27,6 +33,11 @@ class TypeSuccursalesController {
   }
 
   static async updateTypeSuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { id } = request.params;
       const { entite } = request.body;
@@ -43,6 +54,11 @@ class TypeSuccursalesController {
   }
 
   static async deleteTypeSuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { id } = request.params;
       if (!id) {

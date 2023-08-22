@@ -1,4 +1,5 @@
 import { Factures } from "../model/factures.js";
+import Validation from "../validation/validation.js";
 
 class FacturesController {
   static async getFactures(request, response) {
@@ -12,6 +13,11 @@ class FacturesController {
   }
 
   static async createFacture(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const { numero, date_emission, montant_total, id_client, id_vente } = request.body;
 
     try {
@@ -24,6 +30,11 @@ class FacturesController {
   }
 
   static async updateFacture(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const id = request.params.id;
     const { numero, date_emission, montant_total, id_client, id_vente } = request.body;
 
@@ -37,6 +48,11 @@ class FacturesController {
   }
 
   static async deleteFacture(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const id = request.params.id;
 
     try {
@@ -49,6 +65,11 @@ class FacturesController {
   }
 
   static async getFactureById(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const id = request.params.id;
 
     try {
@@ -61,6 +82,11 @@ class FacturesController {
   }
 
   static async getFacturesForClient(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const clientId = request.params.clientId;
 
     try {

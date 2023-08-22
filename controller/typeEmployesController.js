@@ -1,4 +1,5 @@
 import { TypeEmployes } from "../model/typeEmployes.js";
+import Validation from "../validation/validation.js";
 
 class TypeEmployesController {
   static async getTypeEmployes(request, response) {
@@ -12,6 +13,11 @@ class TypeEmployesController {
   }
 
   static async createTypeEmploye(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { nom, description } = request.body;
     try {
       const result = await TypeEmployes.insertTypeEmploye(nom, description);
@@ -23,6 +29,11 @@ class TypeEmployesController {
   }
 
   static async updateTypeEmploye(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     const { nom, description } = request.body;
     try {
@@ -35,6 +46,11 @@ class TypeEmployesController {
   }
 
   static async deleteTypeEmploye(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       await TypeEmployes.deleteTypeEmploye(id);
@@ -46,6 +62,11 @@ class TypeEmployesController {
   }
 
   static async getTypeEmployeById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     try {
       const typeEmploye = await TypeEmployes.getTypeEmployeById(id);
@@ -57,6 +78,11 @@ class TypeEmployesController {
   }
 
   static async getEmployesWithType(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { typeId } = request.params;
     try {
       const employesWithType = await TypeEmployes.getEmployesWithType(typeId);

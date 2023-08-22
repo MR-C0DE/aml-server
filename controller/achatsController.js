@@ -1,5 +1,7 @@
 import { Achats } from "../model/achats.js";
 import { validationResult } from "express-validator";
+import Validation from "../validation/validation.js";
+
 class AchatsController {
   static async getAchats(request, response) {
     try {
@@ -12,9 +14,10 @@ class AchatsController {
   }
 
   static async createAchat(request, response) {
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-      return response.status(400).json({ errors: errors.array() });
+    const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
     }
 
     const { date_achat, id_fournisseur, montant_total } = request.body;
@@ -35,9 +38,11 @@ class AchatsController {
   }
 
   static async updateAchat(request, response) {
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-      return response.status(400).json({ errors: errors.array() });
+    
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
     }
 
     const { id } = request.params;
@@ -64,9 +69,11 @@ class AchatsController {
   }
 
   static async deleteAchat(request, response) {
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-      return response.status(400).json({ errors: errors.array() });
+    
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
     }
 
     const { id } = request.params;
@@ -87,9 +94,11 @@ class AchatsController {
   }
 
   static async getAchatById(request, response) {
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-      return response.status(400).json({ errors: errors.array() });
+    
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
     }
 
     const { id } = request.params;
@@ -110,9 +119,11 @@ class AchatsController {
   }
 
   static async getAchatsByFournisseur(request, response) {
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-      return response.status(400).json({ errors: errors.array() });
+    
+        const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
     }
 
     const { fournisseurId } = request.params;

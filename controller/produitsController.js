@@ -1,4 +1,5 @@
 import { Produits } from "../model/produits.js";
+import Validation from "../validation/validation.js";
 
 class ProduitsController {
   static async getProduits(request, response) {
@@ -12,6 +13,11 @@ class ProduitsController {
   }
 
   static async createProduit(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const {
         nom,
@@ -43,11 +49,21 @@ class ProduitsController {
   }
 
   static async updateProduit(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { id } = request.params;
       const { quantite, prix_unitaire, seuil } = request.body;
 
-      const result = await Produits.updateProduit(id, quantite, prix_unitaire, seuil);
+      const result = await Produits.updateProduit(
+        id,
+        quantite,
+        prix_unitaire,
+        seuil
+      );
 
       response.status(200).json(result);
     } catch (error) {
@@ -57,6 +73,11 @@ class ProduitsController {
   }
 
   static async deleteProduit(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { id } = request.params;
 
@@ -70,6 +91,11 @@ class ProduitsController {
   }
 
   static async getProduitById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { id } = request.params;
 
@@ -87,6 +113,11 @@ class ProduitsController {
   }
 
   static async getProduitsByCategorie(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { categorieId } = request.params;
 
@@ -100,6 +131,11 @@ class ProduitsController {
   }
 
   static async getProduitsBySuccursale(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     try {
       const { succursaleId } = request.params;
 

@@ -1,4 +1,5 @@
 import { HistoriquePrix } from "../model/historiquePrix.js";
+import Validation from "../validation/validation.js";
 
 class HistoriquePrixController {
   static async getHistoriquePrix(request, response) {
@@ -12,11 +13,24 @@ class HistoriquePrixController {
   }
 
   static async createHistoriquePrix(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id_produit, prix_unitaire } = request.body;
 
     try {
-      const result = await HistoriquePrix.insertHistoriquePrix(id_produit, prix_unitaire);
-      response.status(201).json({ id: result.insertId, message: "Historique prix created successfully." });
+      const result = await HistoriquePrix.insertHistoriquePrix(
+        id_produit,
+        prix_unitaire
+      );
+      response
+        .status(201)
+        .json({
+          id: result.insertId,
+          message: "Historique prix created successfully.",
+        });
     } catch (error) {
       console.error(error);
       response.status(500).send("Error creating historique prix.");
@@ -24,12 +38,19 @@ class HistoriquePrixController {
   }
 
   static async updateHistoriquePrix(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     const { prix_unitaire } = request.body;
 
     try {
       await HistoriquePrix.updateHistoriquePrix(id, prix_unitaire);
-      response.status(200).json({ id, message: "Historique prix updated successfully." });
+      response
+        .status(200)
+        .json({ id, message: "Historique prix updated successfully." });
     } catch (error) {
       console.error(error);
       response.status(500).send("Error updating historique prix.");
@@ -37,11 +58,18 @@ class HistoriquePrixController {
   }
 
   static async deleteHistoriquePrix(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
       await HistoriquePrix.deleteHistoriquePrix(id);
-      response.status(200).json({ id, message: "Historique prix deleted successfully." });
+      response
+        .status(200)
+        .json({ id, message: "Historique prix deleted successfully." });
     } catch (error) {
       console.error(error);
       response.status(500).send("Error deleting historique prix.");
@@ -49,6 +77,11 @@ class HistoriquePrixController {
   }
 
   static async getHistoriquePrixById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -65,10 +98,17 @@ class HistoriquePrixController {
   }
 
   static async getProductPriceHistory(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { productId } = request.params;
 
     try {
-      const priceHistory = await HistoriquePrix.getProductPriceHistory(productId);
+      const priceHistory = await HistoriquePrix.getProductPriceHistory(
+        productId
+      );
       response.status(200).json(priceHistory);
     } catch (error) {
       console.error(error);

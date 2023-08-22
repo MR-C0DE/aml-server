@@ -1,4 +1,5 @@
 import { RetoursProduits } from "../model/retoursProduits.js";
+import Validation from "../validation/validation.js";
 
 class RetoursProduitsController {
   static async getRetoursProduits(request, response) {
@@ -12,9 +13,21 @@ class RetoursProduitsController {
   }
 
   static async createRetourProduit(request, response) {
-    const { id_vente, id_produit, quantite, raison, date_retour } = request.body;
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
+    const { id_vente, id_produit, quantite, raison, date_retour } =
+      request.body;
     try {
-      const result = await RetoursProduits.insertRetourProduit(id_vente, id_produit, quantite, raison, date_retour);
+      const result = await RetoursProduits.insertRetourProduit(
+        id_vente,
+        id_produit,
+        quantite,
+        raison,
+        date_retour
+      );
       response.status(201).json(result);
     } catch (error) {
       console.error(error);
@@ -23,10 +36,23 @@ class RetoursProduitsController {
   }
 
   static async updateRetourProduit(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const id = request.params.id;
-    const { id_vente, id_produit, quantite, raison, date_retour } = request.body;
+    const { id_vente, id_produit, quantite, raison, date_retour } =
+      request.body;
     try {
-      const result = await RetoursProduits.updateRetourProduit(id, id_vente, id_produit, quantite, raison, date_retour);
+      const result = await RetoursProduits.updateRetourProduit(
+        id,
+        id_vente,
+        id_produit,
+        quantite,
+        raison,
+        date_retour
+      );
       response.status(200).json(result);
     } catch (error) {
       console.error(error);
@@ -35,6 +61,11 @@ class RetoursProduitsController {
   }
 
   static async deleteRetourProduit(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const id = request.params.id;
     try {
       const result = await RetoursProduits.deleteRetourProduit(id);
@@ -46,6 +77,11 @@ class RetoursProduitsController {
   }
 
   static async getRetourProduitById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const id = request.params.id;
     try {
       const retourProduit = await RetoursProduits.getRetourProduitById(id);
@@ -57,9 +93,16 @@ class RetoursProduitsController {
   }
 
   static async getRetoursProduitsByVente(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const venteId = request.params.venteId;
     try {
-      const retoursProduits = await RetoursProduits.getRetoursProduitsByVente(venteId);
+      const retoursProduits = await RetoursProduits.getRetoursProduitsByVente(
+        venteId
+      );
       response.status(200).json(retoursProduits);
     } catch (error) {
       console.error(error);

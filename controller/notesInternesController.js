@@ -1,4 +1,5 @@
 import { NotesInternes } from "../model/notesInternes.js";
+import Validation from "../validation/validation.js";
 
 class NotesInternesController {
   static async getNotesInternes(request, response) {
@@ -12,10 +13,22 @@ class NotesInternesController {
   }
 
   static async createNoteInterne(request, response) {
-    const { sujet, contenu, date_creation, id_auteur, id_succursale } = request.body;
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
+    const { sujet, contenu, date_creation, id_auteur, id_succursale } =
+      request.body;
 
     try {
-      const result = await NotesInternes.insertNoteInterne(sujet, contenu, date_creation, id_auteur, id_succursale);
+      const result = await NotesInternes.insertNoteInterne(
+        sujet,
+        contenu,
+        date_creation,
+        id_auteur,
+        id_succursale
+      );
       response.status(201).json(result);
     } catch (error) {
       console.error(error);
@@ -24,6 +37,11 @@ class NotesInternesController {
   }
 
   static async updateNoteInterne(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     const { sujet, contenu } = request.body;
 
@@ -37,6 +55,11 @@ class NotesInternesController {
   }
 
   static async deleteNoteInterne(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -49,6 +72,11 @@ class NotesInternesController {
   }
 
   static async getNoteInterneById(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -61,6 +89,11 @@ class NotesInternesController {
   }
 
   static async getNotesByAuthor(request, response) {
+    const errorValide = Validation.valide(request, response);
+
+    if(errorValide){
+      return;
+    }
     const { authorId } = request.params;
 
     try {

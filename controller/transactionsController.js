@@ -1,4 +1,5 @@
 import { Transactions } from "../model/transactions.js";
+import Validation from "../validation/validation.js";
 
 class TransactionsController {
   static async getTransactions(request, response) {
@@ -12,6 +13,11 @@ class TransactionsController {
   }
 
   static async createTransaction(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { type, date_transaction, montant, description, id_entreprise } = request.body;
 
     try {
@@ -24,6 +30,11 @@ class TransactionsController {
   }
 
   static async updateTransaction(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
     const { type, date_transaction, montant, description, id_entreprise } = request.body;
 
@@ -37,6 +48,11 @@ class TransactionsController {
   }
 
   static async deleteTransaction(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -49,6 +65,11 @@ class TransactionsController {
   }
 
   static async getTransactionById(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id } = request.params;
 
     try {
@@ -65,6 +86,11 @@ class TransactionsController {
   }
 
   static async getTransactionsByEnterpriseId(request, response) {
+        const errorValide = Validation.valide(request, response);
+
+    if (errorValide) {
+      return;
+    }
     const { id_entreprise } = request.params;
 
     try {
