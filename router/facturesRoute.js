@@ -11,7 +11,7 @@ routerFactures.get("/", FacturesController.getFactures);
 routerFactures.get("/:id", FacturesValide.id(), FacturesController.getFactureById);
 
 // Récupérer les factures pour un client donné
-routerFactures.get("/client/:clientId", FacturesValide.id(), FacturesController.getFacturesForClient);
+routerFactures.get("/client/:clientId", FacturesValide.id('clientId'), FacturesController.getFacturesForClient);
 
 // Ajouter une nouvelle facture
 routerFactures.post("/",FacturesValide.createFacture(), FacturesController.createFacture);

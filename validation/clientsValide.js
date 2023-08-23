@@ -1,7 +1,7 @@
 import { body, param } from "express-validator";
 
 class ClientsValide {
-  static id(str) {
+  static id(str='id') {
     return [
       param(str)
         .notEmpty()

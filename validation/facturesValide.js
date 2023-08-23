@@ -1,9 +1,9 @@
 import { body, param } from "express-validator";
 
 class FacturesValide {
-  static id() {
+  static id(str='id') {
     return [
-      param("id")
+      param(str)
         .notEmpty()
         .isNumeric()
         .withMessage(
