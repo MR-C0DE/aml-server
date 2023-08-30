@@ -8,7 +8,7 @@ class AnalysesVentesValide {
         .isNumeric()
         .withMessage("L'ID de l'analyse de vente doit être numérique et ne doit pas être vide"),
     ];
-  }
+  } 
 
   static createAnalysesVente() {
     return [

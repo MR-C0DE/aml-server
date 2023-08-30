@@ -18,25 +18,10 @@ class EmployesController {
     if (errorValide) {
       return;
     }
-    const {
-      matricule,
-      nom,
-      salaire,
-      date_embauche,
-      type_employe,
-      id_entreprise,
-    } = request.body;
+    const {matricule, nom, prenom, date_naissance, adresse, telephone, email, salaire, date_embauche, type_employe, id_entreprise} = request.body;
     const STATUT = "En attente";
     try {
-      const result = await Employes.insertEmploye(
-        matricule,
-        nom,
-        salaire,
-        date_embauche,
-        STATUT,
-        type_employe,
-        id_entreprise
-      );
+      const result = await Employes.insertEmploye(matricule, nom, prenom, date_naissance, adresse, telephone, email, salaire, date_embauche, STATUT, type_employe, id_entreprise);
       response.status(201).json(result);
     } catch (error) {
       console.error(error);
@@ -51,26 +36,9 @@ class EmployesController {
       return;
     }
     const { id } = request.params;
-    const {
-      matricule,
-      nom,
-      salaire,
-      date_embauche,
-      statut,
-      type_employe,
-      id_entreprise,
-    } = request.body;
+    const {matricule, nom, prenom, date_naissance, adresse, telephone, email, salaire, date_embauche, statut, type_employe, id_entreprise} = request.body;
     try {
-      const result = await Employes.updateEmploye(
-        id,
-        matricule,
-        nom,
-        salaire,
-        date_embauche,
-        statut,
-        type_employe,
-        id_entreprise
-      );
+      const result = await Employes.updateEmploye(id, matricule, nom, prenom, date_naissance, adresse, telephone, email, salaire, date_embauche, statut, type_employe, id_entreprise);
       response.status(200).json(result);
     } catch (error) {
       console.error(error);

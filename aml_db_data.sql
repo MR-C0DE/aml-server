@@ -1,3 +1,12 @@
+-- Insertion dans la table roles_utilisateurs
+INSERT INTO roles_utilisateurs (nom, description) VALUES
+("Admin", "Rôle administrateur avec tous les privilèges."),
+("Gestionnaire", "Rôle de gestionnaire avec certaines autorisations."),
+("Vendeur", "Rôle de vendeur pour les opérations de vente."),
+("Comptable", "Rôle de comptable pour les opérations financières."),
+("Employé", "Rôle d'employé avec des autorisations limitées.");
+
+
 -- Insertions pour la table type_employes
 INSERT INTO type_employes (nom, description) VALUES
 ('Manager', 'Responsable de la gestion et de la supervision.'),
@@ -39,12 +48,14 @@ INSERT INTO succursales (nom, adresse, ville, code_emplacement, pays, telephone,
 ('Boutique Londres', '456 Fashion Road', 'Londres', 'SW1A 1AA', 'Royaume-Uni', '+44 20 5678 1234', 'boutique@fashiontrends.co.uk', 5, 2);
 
 -- Insertions pour la table employes
-INSERT INTO employes (matricule, nom, salaire, date_embauche, statut, type_employe, id_entreprise) VALUES
-('ACS900','Jean Dupont', 4500.00, '2022-01-15', 'Actif', 1, 1),
-('WAZ234', 'Sophie Martin', 3200.00, '2022-02-28', 'Actif', 2, 2),
-('CVX342', 'Pierre Lambert', 2800.00, '2022-03-10', 'Actif', 2, 2),
-('BNM385', 'Marie Dubois', 2400.00, '2022-04-05', 'Actif', 3, 3),
-('SOX098', 'David Smith', 2600.00, '2022-05-20', 'Actif', 3, 4);
+INSERT INTO employes (matricule, nom, prenom, date_naissance, adresse, telephone, email, salaire, date_embauche, statut, type_employe, id_entreprise)
+VALUES
+    ('M001', 'Dupont', 'Alice', '1990-05-15', '123 Rue de Paris', '1234567890', 'alice@example.com', 45000.00, '2022-01-10', 'Actif', 1, 1),
+    ('M002', 'Martin', 'John', '1985-09-20', '456 Main Street', '9876543210', 'john@example.com', 55000.00, '2021-11-05', 'Actif', 2, 1),
+    ('M003', 'Leclerc', 'Sophie', '1992-03-10', '789 Elm Avenue', '2345678901', 'sophie@example.com', 40000.00, '2023-02-15', 'Actif', 1, 2),
+    ('M004', 'Garcia', 'David', '1988-07-08', '567 Oak Lane', '3456789012', 'david@example.com', 50000.00, '2022-03-20', 'Actif', 2, 2),
+    ('M005', 'Lopez', 'Maria', '1991-12-25', '890 Maple Street', '4567890123', 'maria@example.com', 42000.00, '2023-04-30', 'Actif', 1, 1);
+
 
 -- Insertions pour la table fournisseurs
 INSERT INTO fournisseurs (nom, adresse, telephone, email, id_entreprise) VALUES
@@ -126,13 +137,13 @@ INSERT INTO transactions_caisse (id_succursale, id_employe, montant, type, descr
 (5, 4, 50.00, 'Sortie', 'Achat fournitures de bureau', '2022-05-10 17:00:00'),
 (2, 1, 80.00, 'Sortie', 'Achat de collations', '2022-06-15 13:45:00');
 
--- Insertions pour la table utilisateurs
-INSERT INTO utilisateurs (password, statut, id_employe) VALUES
-('pass123', 'Actif', 1),
-('secure456', 'Actif', 2),
-('password789', 'Actif', 3),
-('secret321', 'Actif', 4),
-('confidential987', 'Actif', 5);
+-- Insertion dans la table utilisateurs
+INSERT INTO utilisateurs (password, statut, id_employe, id_role) VALUES
+('motdepasse1', 'Actif', 1, 1),
+('motdepasse2', 'Actif', 2, 2),
+('motdepasse3', 'Inactif', 3, 3),
+('motdepasse4', 'Actif', 4, 4),
+('motdepasse5', 'Inactif', 5, 5);
 
 -- Insertions pour la table notes_internes
 INSERT INTO notes_internes (sujet, contenu, date_creation, id_auteur, id_succursale) VALUES

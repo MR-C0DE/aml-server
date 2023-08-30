@@ -61,11 +61,6 @@ app.use(morgan("combined", { stream: logger.stream }));
 
 app.use(AuthUtils.authenticateApiKey)
 
-app.get('/test',AuthUtils.authenticateToken ,(req, res)=> {
-    res.status(200).json({
-        card: "87368729343423232"
-    });
-})
 // Ajouter des routes
 app.use("/achats", AuthUtils.authenticateToken, routerAchats);
 app.use("/analysesVentes", AuthUtils.authenticateToken, routerAnalysesVentes);

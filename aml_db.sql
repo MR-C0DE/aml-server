@@ -2,6 +2,16 @@
 
 -- --------------------------------------------------------
 
+-- Structure de la table `roles_utilisateurs`
+
+CREATE TABLE `roles_utilisateurs` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `nom` VARCHAR(50) NOT NULL,
+    `description` text,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- Structure de la table `type_employes`
 
 CREATE TABLE `type_employes` (
@@ -83,6 +93,11 @@ CREATE TABLE `employes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `matricule` varchar(50) NOT NULL,
   `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,  
+  `date_naissance` date NOT NULL,
+  `adresse` varchar(255) NOT NULL,
+  `telephone` varchar(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `salaire` decimal(10,2) NOT NULL,
   `date_embauche` date NOT NULL,
   `statut` varchar(50) NOT NULL,
@@ -281,10 +296,14 @@ CREATE TABLE `utilisateurs` (
   `password` varchar(255) NOT NULL,
   `statut` varchar(50) NOT NULL,
   `id_employe` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_employe` (`id_employe`),
-  CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_employe`) REFERENCES `employes` (`id`)
+  KEY `id_role` (`id_role`),
+  CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_employe`) REFERENCES `employes` (`id`),
+  CONSTRAINT `utilisateurs_ibfk_2` FOREIGN KEY (`id_role`) REFERENCES `roles_utilisateurs` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 

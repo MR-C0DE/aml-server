@@ -72,7 +72,7 @@ class EntreprisesValide {
         .notEmpty()
         .isString()
         .withMessage(
-          "Le '"+str+"' de l'entreprise doit être numérique et ne doit pas être vide"
+          "Le '"+str+"' de l'entreprise doit être une  et ne doit pas être vide"
         ),
     ];
   }
