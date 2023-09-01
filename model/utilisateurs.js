@@ -1,4 +1,5 @@
 import { connection } from "./connexion.js";
+import bcrypt from "bcrypt";
 
 class Utilisateurs {
   static selectUtilisateurs() {
@@ -18,11 +19,11 @@ class Utilisateurs {
     });
   }
 
-  static insertUtilisateur(password, statut, id_employe) {
+  static insertUtilisateur(password, statut, id_employe, id_role) {
     return new Promise((resolve, reject) => {
       const query =
-        "INSERT INTO utilisateurs ( password, statut, id_employe) VALUES (?, ?, ?)";
-      const values = [password, statut, id_employe];
+        "INSERT INTO utilisateurs ( password, statut, id_employe, id_role) VALUES (?, ?, ?, ?)";
+      const values = [password, statut, id_employe, id_role];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
@@ -114,6 +115,22 @@ class Utilisateurs {
   }
 
   // You can add more methods here based on your requirements
+
+  static generatePassword(length) {
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let password = "";
+    
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      password += charset[randomIndex];
+    }
+    
+    return password;
+  }
+
+  static async cryptPasswordUtilisateur(password){
+    return await bcrypt.hash(password, 10);
+  }
 }
 
 export { Utilisateurs };

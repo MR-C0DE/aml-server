@@ -48,13 +48,13 @@ INSERT INTO succursales (nom, adresse, ville, code_emplacement, pays, telephone,
 ('Boutique Londres', '456 Fashion Road', 'Londres', 'SW1A 1AA', 'Royaume-Uni', '+44 20 5678 1234', 'boutique@fashiontrends.co.uk', 5, 2);
 
 -- Insertions pour la table employes
-INSERT INTO employes (matricule, nom, prenom, date_naissance, adresse, telephone, email, salaire, date_embauche, statut, type_employe, id_entreprise)
+INSERT INTO employes (matricule, nom, prenom, date_naissance, adresse, telephone, email, salaire, date_embauche, statut, photo, type_employe, id_entreprise)
 VALUES
-    ('M001', 'Dupont', 'Alice', '1990-05-15', '123 Rue de Paris', '1234567890', 'alice@example.com', 45000.00, '2022-01-10', 'Actif', 1, 1),
-    ('M002', 'Martin', 'John', '1985-09-20', '456 Main Street', '9876543210', 'john@example.com', 55000.00, '2021-11-05', 'Actif', 2, 1),
-    ('M003', 'Leclerc', 'Sophie', '1992-03-10', '789 Elm Avenue', '2345678901', 'sophie@example.com', 40000.00, '2023-02-15', 'Actif', 1, 2),
-    ('M004', 'Garcia', 'David', '1988-07-08', '567 Oak Lane', '3456789012', 'david@example.com', 50000.00, '2022-03-20', 'Actif', 2, 2),
-    ('M005', 'Lopez', 'Maria', '1991-12-25', '890 Maple Street', '4567890123', 'maria@example.com', 42000.00, '2023-04-30', 'Actif', 1, 1);
+    ('M001', 'Dupont', 'Alice', '1990-05-15', '123 Rue de Paris', '1234567890', 'alice@example.com', 45000.00, '2022-01-10', 'Actif','image/none.png',  1, 1),
+    ('M002', 'Martin', 'John', '1985-09-20', '456 Main Street', '9876543210', 'john@example.com', 55000.00, '2021-11-05', 'Actif','image/none.png', 2, 1),
+    ('M003', 'Leclerc', 'Sophie', '1992-03-10', '789 Elm Avenue', '2345678901', 'sophie@example.com', 40000.00, '2023-02-15', 'Actif','image/none.png', 1, 2),
+    ('M004', 'Garcia', 'David', '1988-07-08', '567 Oak Lane', '3456789012', 'david@example.com', 50000.00, '2022-03-20', 'Actif','image/none.png', 2, 2),
+    ('M005', 'Lopez', 'Maria', '1991-12-25', '890 Maple Street', '4567890123', 'maria@example.com', 42000.00, '2023-04-30', 'Actif','image/none.png', 1, 1);
 
 
 -- Insertions pour la table fournisseurs

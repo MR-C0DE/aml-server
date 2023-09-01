@@ -6,7 +6,7 @@ import EntreprisesValide from "../validation/entreprisesValide.js";
 const routerEntreprises = Router();
 
 // Récupérer toutes les entreprises
-routerEntreprises.get("/", AuthUtils.authenticateToken, EntreprisesController.getEntreprises);
+routerEntreprises.get("/", EntreprisesController.getEntreprises);
 
 // Récupérer une entreprise par ID
 routerEntreprises.get("/:id", AuthUtils.authenticateToken, EntreprisesController.getEntrepriseById);
@@ -18,7 +18,11 @@ routerEntreprises.get("/country/:country", EntreprisesValide.otherStringByParam(
 routerEntreprises.get("/status/:status",EntreprisesValide.otherStringByParam('status') , AuthUtils.authenticateToken, EntreprisesController.getEntreprisesWithStatus);
 
 // Ajouter une nouvelle entreprise
-routerEntreprises.post("/", EntreprisesValide.updateEntreprise(), EntreprisesController.createEntreprise);
+routerEntreprises.post("/", EntreprisesValide.createEntreprise(), EntreprisesController.createEntreprise);
+
+// Ajouter un nouveau compte entreprise
+routerEntreprises.post("/newAccount", EntreprisesController.createAccountEntreprise);
+
 
 // Mettre à jour les informations d'une entreprise
 routerEntreprises.put("/:id", EntreprisesValide.id(), AuthUtils.authenticateToken, EntreprisesController.updateEntreprise);

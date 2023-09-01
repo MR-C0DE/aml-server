@@ -1,4 +1,6 @@
+import { Employes } from "../model/employes.js";
 import { Entreprises } from "../model/entreprises.js";
+import { Utilisateurs } from "../model/utilisateurs.js";
 import Validation from "../validation/validation.js";
 
 class EntreprisesController {
@@ -20,7 +22,7 @@ class EntreprisesController {
     }
     const { nom, pays, ville, adresse, telephone, email, site_web } =
       request.body;
-    const statut = "En attente";
+    const statut = "actif";
     const matricule = await Entreprises.generateUniqueMatricule();
     try {
       const result = await Entreprises.insertEntreprise(
@@ -147,6 +149,95 @@ class EntreprisesController {
       response.status(500).send("Error getting entreprises with status.");
     }
   }
+
+  static async createAccountEntreprise(request, response) {
+    try {
+      const { info_entreprise, info_proprietaire } = request.body;
+      const {
+        nom,
+        pays,
+        ville,
+        adresse,
+        telephone,
+        email,
+        site_web
+      } = info_entreprise;
+  
+      const statut = "actif";
+      const matriculeEntreprise = await Entreprises.generateUniqueMatricule();
+  
+      const resultEntreprise = await Entreprises.insertEntreprise(
+        nom,
+        pays,
+        ville,
+        adresse,
+        telephone,
+        email,
+        site_web,
+        matriculeEntreprise,
+        statut
+      );
+  
+      const {
+        nom: nomProprietaire,
+        prenom,
+        date_naissance,
+        adresse: adresseProprietaire,
+        telephone: telephoneProprietaire,
+        email: emailProprietaire,
+        photo
+      } = info_proprietaire;
+  
+      const statutEmploye = "actif";
+      const salaire = "0.0";
+      const dateEmbauche = "2000-01-01 00:00:00";
+      const typeEmploye = 1;
+      const matriculeEmploye = await Employes.generateUniqueMatricule();
+  
+      const resultEmploye = await Employes.insertEmploye(
+        matriculeEmploye,
+        nomProprietaire,
+        prenom,
+        date_naissance,
+        adresseProprietaire,
+        telephoneProprietaire,
+        emailProprietaire,
+        salaire,
+        dateEmbauche,
+        statutEmploye,
+        photo,
+        typeEmploye,
+        resultEntreprise.insertId
+      );
+  
+      const password = Utilisateurs.generatePassword(5);
+      const hashedPassword = await Utilisateurs.cryptPasswordUtilisateur(
+        password
+      );
+      const statutUtilisateur = "actif";
+      const roleUtilisateur = 1;
+  
+      const resultUtilisateur = await Utilisateurs.insertUtilisateur(
+        hashedPassword,
+        statutUtilisateur,
+        resultEmploye.insertId,
+        roleUtilisateur
+      );
+  
+      response.status(200).json([
+        resultEntreprise,
+        resultEmploye,
+        resultUtilisateur,
+        {
+          "Password": password
+        }
+      ]);
+    } catch (error) {
+      console.error(error);
+      response.status(500).send("An error occurred while creating the account.");
+    }
+  }
+  
 }
 
 export { EntreprisesController };

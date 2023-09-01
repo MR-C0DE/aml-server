@@ -101,6 +101,7 @@ CREATE TABLE `employes` (
   `salaire` decimal(10,2) NOT NULL,
   `date_embauche` date NOT NULL,
   `statut` varchar(50) NOT NULL,
+  `photo` varchar(255) NOT NULL,
   `type_employe` int(11) NOT NULL,
   `id_entreprise` int(11) NOT NULL,
   PRIMARY KEY (`id`),

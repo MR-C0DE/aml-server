@@ -68,7 +68,7 @@ app.use("/categoriesProduits", AuthUtils.authenticateToken, routerCategoriesProd
 app.use("/clients", AuthUtils.authenticateToken, routerClients);
 app.use("/commandesFournisseurs", AuthUtils.authenticateToken, routerCommandesFournisseurs);
 app.use("/detailVentes", AuthUtils.authenticateToken, routerDetailsVentes);
-app.use("/employes", AuthUtils.authenticateToken, routerEmployes);
+app.use("/employes", routerEmployes);
 app.use("/entreprises", routerEntreprises);
 app.use("/factures", AuthUtils.authenticateToken, routerFactures);
 app.use("/fournisseurs", AuthUtils.authenticateToken, routerFournisseurs);
