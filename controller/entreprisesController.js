@@ -153,19 +153,12 @@ class EntreprisesController {
   static async createAccountEntreprise(request, response) {
     try {
       const { info_entreprise, info_proprietaire } = request.body;
-      const {
-        nom,
-        pays,
-        ville,
-        adresse,
-        telephone,
-        email,
-        site_web
-      } = info_entreprise;
-  
+      const { nom, pays, ville, adresse, telephone, email, site_web } =
+        info_entreprise;
+
       const statut = "actif";
       const matriculeEntreprise = await Entreprises.generateUniqueMatricule();
-  
+
       const resultEntreprise = await Entreprises.insertEntreprise(
         nom,
         pays,
@@ -177,7 +170,7 @@ class EntreprisesController {
         matriculeEntreprise,
         statut
       );
-  
+
       const {
         nom: nomProprietaire,
         prenom,
@@ -185,15 +178,15 @@ class EntreprisesController {
         adresse: adresseProprietaire,
         telephone: telephoneProprietaire,
         email: emailProprietaire,
-        photo
+        photo,
       } = info_proprietaire;
-  
+
       const statutEmploye = "actif";
       const salaire = "0.0";
       const dateEmbauche = "2000-01-01 00:00:00";
       const typeEmploye = 1;
       const matriculeEmploye = await Employes.generateUniqueMatricule();
-  
+
       const resultEmploye = await Employes.insertEmploye(
         matriculeEmploye,
         nomProprietaire,
@@ -209,35 +202,36 @@ class EntreprisesController {
         typeEmploye,
         resultEntreprise.insertId
       );
-  
+
       const password = Utilisateurs.generatePassword(5);
       const hashedPassword = await Utilisateurs.cryptPasswordUtilisateur(
         password
       );
       const statutUtilisateur = "actif";
       const roleUtilisateur = 1;
-  
+
       const resultUtilisateur = await Utilisateurs.insertUtilisateur(
         hashedPassword,
         statutUtilisateur,
         resultEmploye.insertId,
         roleUtilisateur
       );
-  
+
       response.status(200).json([
         resultEntreprise,
         resultEmploye,
         resultUtilisateur,
         {
-          "Password": password
-        }
+          Password: password,
+        },
       ]);
     } catch (error) {
       console.error(error);
-      response.status(500).send("An error occurred while creating the account.");
+      response
+        .status(500)
+        .send("An error occurred while creating the account.");
     }
   }
-  
 }
 
 export { EntreprisesController };
