@@ -209,6 +209,7 @@ CREATE TABLE `produits` (
   `date_derniere_maj` datetime NOT NULL,
   `seuil` int(11) NOT NULL,
   `code_produit` varchar(255) NOT NULL,
+  `photo` varchar(255) NOT NULL,
   `categorie_produit` int(11) NOT NULL,
   `id_succursale` int(11) NOT NULL,
   PRIMARY KEY (`id`),

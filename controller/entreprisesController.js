@@ -1,6 +1,8 @@
+import EmailSender from "../model/emailSender.js";
 import { Employes } from "../model/employes.js";
 import { Entreprises } from "../model/entreprises.js";
 import { Utilisateurs } from "../model/utilisateurs.js";
+import { messageConfirmation } from "../messages/confirmation.js";
 import Validation from "../validation/validation.js";
 
 class EntreprisesController {
@@ -217,14 +219,28 @@ class EntreprisesController {
         roleUtilisateur
       );
 
-      response.status(200).json([
+      // Envoyer une réponse immédiate avec les données générées
+      response.status(200).json({
         resultEntreprise,
         resultEmploye,
         resultUtilisateur,
-        {
-          Password: password,
-        },
-      ]);
+  
+    });
+
+      // Maintenant, envoyez l'e-mail
+      const emailSender = new EmailSender();
+      const sujetConfirmation =
+        "Confirmation de création de compte sur AML-business";
+      const message = messageConfirmation(
+        matriculeEntreprise,
+        matriculeEmploye,
+        password
+      );
+      await emailSender.sendEmail(
+        "aml-business@outlook.com",
+        sujetConfirmation,
+        message
+      );
     } catch (error) {
       console.error(error);
       response

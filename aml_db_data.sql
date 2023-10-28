@@ -98,12 +98,12 @@ INSERT INTO achats (date_achat, id_fournisseur, montant_total) VALUES
 ('2022-09-28 11:45:00', 4, 850.00);
 
 -- Insertions pour la table produits
-INSERT INTO produits (nom, description, quantite, prix_unitaire, date_ajout, date_derniere_maj, seuil, code_produit, categorie_produit, id_succursale) VALUES
-('Smartphone', 'Téléphone intelligent haut de gamme.', 50, 599.99, '2022-01-20 09:30:00', '2022-01-20 09:30:00', 10, 'SPH001', 1, 2),
-('Chemise', 'Chemise élégante pour hommes.', 100, 39.99, '2022-02-10 15:45:00', '2022-02-10 15:45:00', 20, 'CMS002', 2, 2),
-('Chocolat', 'Chocolat noir suisse de qualité.', 200, 4.99, '2022-03-05 11:20:00', '2022-03-05 11:20:00', 30, 'CHC003', 3, 3),
-('Lampe', 'Lampe de bureau moderne.', 80, 29.99, '2022-04-18 14:00:00', '2022-04-18 14:00:00', 15, 'LMP004', 4, 4),
-('Ordinateur portable', 'Ordinateur portable puissant.', 30, 899.99, '2022-05-10 16:45:00', '2022-05-10 16:45:00', 5, 'LTP005', 5, 5);
+INSERT INTO produits (nom, description, quantite, prix_unitaire, date_ajout, date_derniere_maj, seuil, code_produit, photo, categorie_produit, id_succursale) VALUES
+('Smartphone', 'Téléphone intelligent haut de gamme.', 50, 599.99, '2022-01-20 09:30:00', '2022-01-20 09:30:00', 10, 'SPH001', 'None', 1, 2),
+('Chemise', 'Chemise élégante pour hommes.', 100, 39.99, '2022-02-10 15:45:00', '2022-02-10 15:45:00', 20, 'CMS002', 'None', 2, 2),
+('Chocolat', 'Chocolat noir suisse de qualité.', 200, 4.99, '2022-03-05 11:20:00', '2022-03-05 11:20:00', 30, 'CHC003', 'None', 3, 3),
+('Lampe', 'Lampe de bureau moderne.', 80, 29.99, '2022-04-18 14:00:00', '2022-04-18 14:00:00', 15, 'LMP004', 'None', 4, 4),
+('Ordinateur portable', 'Ordinateur portable puissant.', 30, 899.99, '2022-05-10 16:45:00', '2022-05-10 16:45:00', 5, 'LTP005', 'None', 5, 5);
 
 -- Insertions pour la table commandes_fournisseurs
 INSERT INTO commandes_fournisseurs (id_achat, id_produit, quantite, prix_achats) VALUES
