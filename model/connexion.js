@@ -1,12 +1,11 @@
 import mysql from 'mysql2';
 
 const config = {
-  user: 'root',
-  password: 'root',
-  host: 'localhost',
-  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-  database: 'aml_db',
-  multipleStatements: true
+  host: 'frwahxxknm9kwy6c.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+  user: 'iudm3bbfn5ppoikf',
+  password: 'fshw1e999frqyv0a',
+  database: 'b4jsnb2mhq17shf2',
+  port: 3306
 };
 
 
