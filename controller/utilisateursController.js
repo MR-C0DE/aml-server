@@ -140,6 +140,8 @@ class UtilisateursController {
         .send("Erreur lors de la suppression de l'utilisateur.");
     }
   }
+
+  
 }
 
 export { UtilisateursController };
