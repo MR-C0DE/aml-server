@@ -174,12 +174,12 @@ class EntreprisesController {
       );
 
       const {
-        nom: nomProprietaire,
+        nomProprietaire,
         prenom,
         date_naissance,
-        adresse: adresseProprietaire,
-        telephone: telephoneProprietaire,
-        email: emailProprietaire,
+        adresseProprietaire,
+        telephoneProprietaire,
+        emailProprietaire,
         photo,
       } = info_proprietaire;
 
