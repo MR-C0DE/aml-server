@@ -237,7 +237,7 @@ class EntreprisesController {
         password
       );
       await emailSender.sendEmail(
-        "andremulaja@outlook.com",
+        emailProprietaire,
         sujetConfirmation,
         message
       );
