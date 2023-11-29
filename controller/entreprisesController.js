@@ -237,7 +237,7 @@ class EntreprisesController {
         password
       );
       await emailSender.sendEmail(
-        "2679633@collegelacite.ca",
+        "andremulaja@outlook.com",
         sujetConfirmation,
         message
       );
