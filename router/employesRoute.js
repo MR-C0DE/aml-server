@@ -10,6 +10,9 @@ routerEmployes.get("/", EmployesController.getEmployes);
 // Récupérer un employé par ID
 routerEmployes.get("/:id", EmployesValide.id(), EmployesController.getEmployeById);
 
+// Récupérer un employé par ID
+routerEmployes.get("/entreprise/:id", EmployesValide.id(), EmployesController.getEmployeByIdEntreprise);
+
 // Ajouter un nouvel employé
 routerEmployes.post("/", EmployesValide.createEmploye() , EmployesController.createEmploye);
 

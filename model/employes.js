@@ -77,6 +77,20 @@ class Employes {
     });
   }
 
+  static getEmployeByIdEntreprise(id_entreprise) {
+    return new Promise((resolve, reject) => {
+      connection.query("SELECT * FROM employes WHERE id_entreprise=?", [id_entreprise], (error, results, fields) => {
+        if (error) {
+          console.error("Error executing query:", error);
+          reject(error);
+        } else {
+          console.log("Query results:", results);
+          resolve(results[0]);
+        }
+      });
+    });
+  }
+
   static getEmployeByMatricule(matricule) {
     return new Promise((resolve, reject) => {
       connection.query("SELECT * FROM employes WHERE matricule=?", [matricule], (error, results, fields) => {
@@ -90,6 +104,9 @@ class Employes {
       });
     });
   }
+
+  
+
 
   // Additional methods
   static getEmployesByType(typeId) {
