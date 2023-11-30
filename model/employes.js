@@ -85,7 +85,7 @@ class Employes {
           reject(error);
         } else {
           console.log("Query results:", results);
-          resolve(results[0]);
+          resolve(results);
         }
       });
     });
