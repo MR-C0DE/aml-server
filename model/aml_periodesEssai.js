@@ -1,10 +1,10 @@
 import { connection } from "./connexion.js";
 
-class PaiementsEntreprises {
-  static selectPaiementsEntreprises() {
+class AML_PeriodesEssai {
+  static selectPeriodesEssai() {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM paiements_entreprises",
+        "SELECT * FROM aml_periodes_essai",
         (error, results, fields) => {
           if (error) {
             console.error("Error executing query:", error);
@@ -18,60 +18,60 @@ class PaiementsEntreprises {
     });
   }
 
-  static insertPaiementEntreprise(id_entreprise, date_paiement, montant, id_abonnement) {
+  static insertPeriodeEssai(id_entreprise, date_debut, duree) {
     return new Promise((resolve, reject) => {
       const query =
-        "INSERT INTO paiements_entreprises (id_entreprise, date_paiement, montant, id_abonnement) VALUES (?, ?, ?, ?)";
-      const values = [id_entreprise, date_paiement, montant, id_abonnement];
+        "INSERT INTO aml_periodes_essai (id_entreprise, date_debut, duree) VALUES (?, ?, ?)";
+      const values = [id_entreprise, date_debut, duree];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Inserted payment with ID:", results.insertId);
+          console.log("Inserted période d'essai with ID:", results.insertId);
           resolve(results);
         }
       });
     });
   }
 
-  static updatePaiementEntreprise(id, id_entreprise, date_paiement, montant, id_abonnement) {
+  static updatePeriodeEssai(id, id_entreprise, date_debut, duree) {
     return new Promise((resolve, reject) => {
       const query =
-        "UPDATE paiements_entreprises SET id_entreprise = ?, date_paiement = ?, montant = ?, id_abonnement = ? WHERE id = ?";
-      const values = [id_entreprise, date_paiement, montant, id_abonnement, id];
+        "UPDATE aml_periodes_essai SET id_entreprise = ?, date_debut = ?, duree = ? WHERE id = ?";
+      const values = [id_entreprise, date_debut, duree, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Updated payment with ID:", id);
+          console.log("Updated période d'essai with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static deletePaiementEntreprise(id) {
+  static deletePeriodeEssai(id) {
     return new Promise((resolve, reject) => {
-      const query = "DELETE FROM paiements_entreprises WHERE id = ?";
+      const query = "DELETE FROM aml_periodes_essai WHERE id = ?";
       const values = [id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Deleted payment with ID:", id);
+          console.log("Deleted période d'essai with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static getPaiementEntrepriseById(id) {
+  static getPeriodeEssaiById(id) {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM paiements_entreprises WHERE id=?",
+        "SELECT * FROM aml_periodes_essai WHERE id=?",
         [id],
         (error, results, fields) => {
           if (error) {
@@ -85,6 +85,15 @@ class PaiementsEntreprises {
       );
     });
   }
+
+  static differenceInMonths(dateInitial, dateCurrent) {
+    let differenceInMonths = (dateCurrent.getFullYear() - dateInitial.getFullYear()) * 12;
+    differenceInMonths += dateCurrent.getMonth() - dateInitial.getMonth();
+    
+    return differenceInMonths;
+  }
+  
+  
 }
 
-export { PaiementsEntreprises };
+export { AML_PeriodesEssai };

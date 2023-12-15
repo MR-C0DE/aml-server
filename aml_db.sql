@@ -402,34 +402,22 @@ CREATE TABLE `journalisations_operations` (
 
 -- Structure de la table `aml_paiements_entreprises`
 
-CREATE TABLE `aml_paiements_entreprises` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_entreprise` int(11) NOT NULL,
-  `date_paiement` datetime NOT NULL,
-  `montant` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_entreprise` (`id_entreprise`),
-  CONSTRAINT `aml_paiements_entreprises_ibfk_1` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- Structure de la table `paiements_entreprises` mise à jour
-CREATE TABLE `paiements_entreprises` (
+CREATE TABLE `aml_paiements_entreprises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_entreprise` int(11) NOT NULL,
   `date_paiement` datetime NOT NULL,
   `montant` decimal(10,2) NOT NULL,
   `id_abonnement` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_entreprise` (`id_entreprise`),
   KEY `id_abonnement` (`id_abonnement`),
-  CONSTRAINT `fk_paiements_entreprises_entreprise` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`),
-  CONSTRAINT `fk_paiements_entreprises_abonnements` FOREIGN KEY (`id_abonnement`) REFERENCES `abonnements` (`id`)
+  CONSTRAINT `fk_paiements_entreprises_abonnements` FOREIGN KEY (`id_abonnement`) REFERENCES `aml_abonnements` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- Structure de la table `abonnements`
-CREATE TABLE `abonnements` (
+CREATE TABLE `aml_abonnements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_entreprise` int(11) NOT NULL,
   `duree` int(11) NOT NULL,
@@ -442,7 +430,7 @@ CREATE TABLE `abonnements` (
 
 
 -- Structure de la table `periodes_essai`
-CREATE TABLE `periodes_essai` (
+CREATE TABLE `aml_periodes_essai` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_entreprise` int(11) NOT NULL,
   `date_debut` DATE NOT NULL,

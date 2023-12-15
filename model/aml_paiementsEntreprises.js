@@ -1,10 +1,10 @@
 import { connection } from "./connexion.js";
 
-class Abonnements {
-  static selectAbonnements() {
+class AML_PaiementsEntreprises {
+  static selectPaiementsEntreprises() {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM abonnements",
+        "SELECT * FROM aml_paiements_entreprises",
         (error, results, fields) => {
           if (error) {
             console.error("Error executing query:", error);
@@ -18,78 +18,60 @@ class Abonnements {
     });
   }
 
-  static insertAbonnement(id_entreprise, montant, duree, date_debut, date_prochain_paiement, a_paye) {
+  static insertPaiementEntreprise(date_paiement, montant, id_abonnement) {
     return new Promise((resolve, reject) => {
       const query =
-        "INSERT INTO abonnements (id_entreprise, montant, duree, date_debut, date_prochain_paiement, a_paye) VALUES (?, ?, ?, ?, ?, ?)";
-      const values = [id_entreprise, montant, duree, date_debut, date_prochain_paiement, a_paye];
+        "INSERT INTO aml_paiements_entreprises (date_paiement, montant, id_abonnement) VALUES (?, ?, ?, ?)";
+      const values = [date_paiement, montant, id_abonnement];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Inserted abonnement with ID:", results.insertId);
+          console.log("Inserted payment with ID:", results.insertId);
           resolve(results);
         }
       });
     });
   }
 
-  static updateAbonnement(id, id_entreprise, duree, date_debut, date_prochain_paiement) {
+  static updatePaiementEntreprise(id, date_paiement, montant, id_abonnement) {
     return new Promise((resolve, reject) => {
       const query =
-        "UPDATE abonnements SET id_entreprise = ?, duree = ?, date_debut = ?, date_prochain_paiement = ? WHERE id = ?";
-      const values = [id_entreprise, duree, date_debut, date_prochain_paiement, id];
+        "UPDATE aml_paiements_entreprises SET id_entreprise = ?, date_paiement = ?, montant = ?, id_abonnement = ? WHERE id = ?";
+      const values = [date_paiement, montant, id_abonnement, id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Updated abonnement with ID:", id);
+          console.log("Updated payment with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static deleteAbonnement(id) {
+  static deletePaiementEntreprise(id) {
     return new Promise((resolve, reject) => {
-      const query = "DELETE FROM abonnements WHERE id = ?";
+      const query = "DELETE FROM aml_paiements_entreprises WHERE id = ?";
       const values = [id];
       connection.query(query, values, (error, results, fields) => {
         if (error) {
           console.error("Error executing query:", error);
           reject(error);
         } else {
-          console.log("Deleted abonnement with ID:", id);
+          console.log("Deleted payment with ID:", id);
           resolve(results);
         }
       });
     });
   }
 
-  static getAbonnementById(id) {
+  static getPaiementEntrepriseById(id) {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM abonnements WHERE id=?",
-        [id],
-        (error, results, fields) => {
-          if (error) {
-            console.error("Error executing query:", error);
-            reject(error);
-          } else {
-            console.log("Query results:", results);
-            resolve(results[0]);
-          }
-        }
-      );
-    });
-  }
-
-  static getAbonnementByIdEntreprise(id) {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        "SELECT * FROM abonnements WHERE id_entreprise=?",
+        "SELECT * FROM aml_paiements_entreprises WHERE id=?",
         [id],
         (error, results, fields) => {
           if (error) {
@@ -105,4 +87,4 @@ class Abonnements {
   }
 }
 
-export { Abonnements };
+export { AML_PaiementsEntreprises };

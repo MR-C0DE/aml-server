@@ -1,11 +1,11 @@
 import AuthUtils from "../configuration/auth.js";
 import { Utilisateurs } from "../model/utilisateurs.js";
 import { Entreprises } from "../model/entreprises.js";
-import { PeriodesEssai } from "../model/periodesEssai.js";
+import { AML_PeriodesEssai } from "../model/aml_periodesEssai.js";
 
 import bcrypt from "bcrypt";
 import Validation from "../validation/validation.js";
-import { Abonnements } from "../model/abonnements.js";
+import { AML_Abonnements } from "../model/aml_abonnements.js";
 
 class LoginController {
   static async connect(request, response) {
@@ -89,7 +89,7 @@ class LoginController {
   }
 
   static async checkTrialPeriod(entreprise) {
-    const periodeEssai = await PeriodesEssai.getPeriodeEssaiByEntrepriseId(entreprise.id);
+    const periodeEssai = await AML_PeriodesEssai.getPeriodeEssaiByEntrepriseId(entreprise.id);
 
     if (periodeEssai) {
       const date_debut = new Date(periodeEssai.date_debut);
@@ -113,7 +113,7 @@ class LoginController {
   }
 
   static async checkActiveSubscription(entreprise) {
-    const abonnement = await Abonnements.getAbonnementByIdEntreprise(entreprise.id);
+    const abonnement = await AML_Abonnements.getAbonnementByIdEntreprise(entreprise.id);
 
     if (abonnement) {
       const date_debut = new Date(abonnement.date_debut);
