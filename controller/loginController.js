@@ -21,6 +21,17 @@ class LoginController {
     }
   }
 
+  static async checkin(request, response) {
+   
+    const { matricule } = request.params;
+
+    try { 
+      response.status(200).json({ data: await LoginController.checkEntreprise(matricule) });
+    } catch (error) {
+      response.status(500).json({ message: "Internal server error" });
+    }
+  }
+
   static async connexion(request, response) {
     const errorValide = Validation.valide(request, response);
 
@@ -83,15 +94,15 @@ class LoginController {
     if (periodeEssai) {
       const date_debut = new Date(periodeEssai.date_debut);
       const date_actuel = new Date();
-      const duree = PeriodesEssai.differenceInMonths(date_debut, date_actuel);
+      const dureeRestante = periodeEssai.duree - PeriodesEssai.differenceInMonths(date_debut, date_actuel);
 
-      if (duree <= 0) {
+      if (dureeRestante <= 0) {
         entreprise.statut = "Actif";
-        const { id, nom, pays, adresse, telephone, email, site_web, matricule, statut } = entreprise;
-        const result = await Entreprises.updateEntreprise(id, nom, pays, adresse, telephone, email, site_web, matricule, statut);
+        const { id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut } = entreprise;
+        const result = await Entreprises.updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut);
 
         if (result) {
-          return await LoginController.checkEntreprise(entreprise.id);
+          return await LoginController.checkEntreprise(entreprise.matricule);
         }
       }
 
@@ -107,22 +118,21 @@ class LoginController {
     if (abonnement) {
       const date_debut = new Date(abonnement.date_debut);
       const date_actuel = new Date();
-      const duree = PeriodesEssai.differenceInMonths(date_debut, date_actuel);
-
-      if (duree <= 0) {
+      const dureeRestante = abonnement.duree - PeriodesEssai.differenceInMonths(date_debut, date_actuel);
+      if (dureeRestante <= 0) {
         entreprise.statut = "invalid";
-        const { id, nom, pays, adresse, telephone, email, site_web, matricule, statut } = entreprise;
-        const result = await Entreprises.updateEntreprise(id, nom, pays, adresse, telephone, email, site_web, matricule, statut);
+        const { id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut } = entreprise;
+        const result = await Entreprises.updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut);
 
         if (result) {
-          return await LoginController.checkEntreprise(entreprise.id);
+          return await LoginController.checkEntreprise(entreprise.matricule);
         }
       }
     }
 
     return {
-      valid: false,
-      message: "Invalid subscription or trial period expired",
+      valid: true,
+      message: null,
     };
   }
 }

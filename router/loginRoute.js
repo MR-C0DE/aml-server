@@ -9,4 +9,5 @@ routerLogin.get("/", LoginController.connect);
 
 routerLogin.post("/", LoginValide.connexion(), LoginController.connexion);
 
+routerLogin.get("/checkin/:matricule", LoginController.checkin);
 export default routerLogin;

@@ -215,6 +215,7 @@ INSERT INTO analyses_ventes (id_produit, mois_annee, ventes_totales, stock_initi
 
 
 
+
 INSERT INTO abonnements (id_entreprise, duree, date_debut, date_prochain_paiement) VALUES
 (1, 12, '2023-01-01', '2023-02-01'),
 (2, 6, '2023-03-15', '2023-04-15'),
