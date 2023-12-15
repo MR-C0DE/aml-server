@@ -1,4 +1,6 @@
 import { connection } from "./connexion.js";
+import { AML_PeriodesEssai } from "../model/aml_periodesEssai.js";
+import { AML_Abonnements } from "../model/aml_abonnements.js";
 
 class Entreprises {
   static selectEntreprises() {
@@ -197,6 +199,82 @@ class Entreprises {
   }
 
   
+  static async checkEntreprise(matricule) {
+    try {
+      const entreprise = await Entreprises.getEntrepriseByMatricule(matricule);
+
+      if (!entreprise) {
+        return { valid: false, message: "Entreprise not found" };
+      }
+
+      if (entreprise.statut === "essai") {
+        return await Entreprises.checkTrialPeriod(entreprise);
+      } else if (entreprise.statut === "invalide") {
+        return { valid: false, message: "Invalid subscription" };
+      } else if (entreprise.statut === 'Actif') {
+        return await Entreprises.checkActiveSubscription(entreprise);
+      }
+
+      return { valid: false, message: "Invalid subscription or trial period expired" };
+    } catch (error) {
+      console.error("Error checking entreprise:", error);
+      return { valid: false, message: "Internal server error" };
+    }
+  }
+
+  static async checkTrialPeriod(entreprise) {
+    const periodeEssai = await AML_PeriodesEssai.getPeriodeEssaiByEntrepriseId(entreprise.id);
+
+    if (periodeEssai) {
+      const date_debut = new Date(periodeEssai.date_debut);
+      const date_actuel = new Date();
+      const dureeRestante = periodeEssai.duree - Entreprises.differenceInMonths(date_debut, date_actuel);
+
+      if (dureeRestante <= 0) {
+        entreprise.statut = "Actif";
+        const { id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut } = entreprise;
+        const result = await Entreprises.updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut);
+
+        if (result) {
+          return await Entreprises.checkEntreprise(entreprise.matricule);
+        }
+      }
+
+      return { valid: true, message: "in trial period" };
+    }
+
+    return { valid: true, message: null };
+  }
+
+  static async checkActiveSubscription(entreprise) {
+    const abonnement = await AML_Abonnements.getAbonnementByIdEntreprise(entreprise.id);
+
+    if (abonnement) {
+      const date_debut = new Date(abonnement.date_debut);
+      const date_actuel = new Date();
+      const dureeRestante = abonnement.duree - Entreprises.differenceInMonths(date_debut, date_actuel);
+      if (dureeRestante <= 0) {
+        entreprise.statut = "invalid";
+        const { id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut } = entreprise;
+        const result = await Entreprises.updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut);
+
+        if (result) {
+          return await Entreprises.checkEntreprise(entreprise.matricule);
+        }
+      }
+    }
+
+    return {
+      valid: true,
+      message: "Entreprise is valid",
+    };
+  }
+  static differenceInMonths(dateInitial, dateCurrent) {
+    let differenceInMonths = (dateCurrent.getFullYear() - dateInitial.getFullYear()) * 12;
+    differenceInMonths += dateCurrent.getMonth() - dateInitial.getMonth();
+    
+    return differenceInMonths;
+  }
 }
 
 export { Entreprises };

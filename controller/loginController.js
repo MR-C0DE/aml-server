@@ -1,11 +1,10 @@
 import AuthUtils from "../configuration/auth.js";
 import { Utilisateurs } from "../model/utilisateurs.js";
 import { Entreprises } from "../model/entreprises.js";
-import { AML_PeriodesEssai } from "../model/aml_periodesEssai.js";
 
 import bcrypt from "bcrypt";
 import Validation from "../validation/validation.js";
-import { AML_Abonnements } from "../model/aml_abonnements.js";
+
 
 class LoginController {
   static async connect(request, response) {
@@ -26,7 +25,9 @@ class LoginController {
     const { matricule } = request.params;
 
     try { 
-      response.status(200).json({ data: await LoginController.checkEntreprise(matricule) });
+      const resultat = await Entreprises.checkEntreprise(matricule);
+      
+      response.status(200).json({ valid: resultat.valid, message: resultat.message  });
     } catch (error) {
       response.status(500).json({ message: "Internal server error" });
     }
@@ -58,6 +59,15 @@ class LoginController {
         return response.status(401).json({ message: "Invalid password" });
       }
 
+      const entreprise = await Entreprises.getEntrepriseById(userResponse.id_entreprise);
+      if(!entreprise){
+        response.status(500).json({ message: "Failed auth: entriprise not found" });
+      }
+
+      const check = await Entreprises.checkEntreprise(entreprise.matricule);
+
+      console.log(check);
+
       const token = AuthUtils.generateToken(userResponse);
       response.status(200).json({ token });
     } catch (error) {
@@ -65,76 +75,6 @@ class LoginController {
     }
   }
 
-  static async checkEntreprise(matricule) {
-    try {
-      const entreprise = await Entreprises.getEntrepriseByMatricule(matricule);
-
-      if (!entreprise) {
-        return { valid: false, message: "Entreprise not found" };
-      }
-
-      if (entreprise.statut === "essai") {
-        return await LoginController.checkTrialPeriod(entreprise);
-      } else if (entreprise.statut === "invalide") {
-        return { valid: false, message: "Invalid subscription" };
-      } else if (entreprise.statut === 'Actif') {
-        return await LoginController.checkActiveSubscription(entreprise);
-      }
-
-      return { valid: false, message: "Invalid subscription or trial period expired" };
-    } catch (error) {
-      console.error("Error checking entreprise:", error);
-      return { valid: false, message: "Internal server error" };
-    }
-  }
-
-  static async checkTrialPeriod(entreprise) {
-    const periodeEssai = await AML_PeriodesEssai.getPeriodeEssaiByEntrepriseId(entreprise.id);
-
-    if (periodeEssai) {
-      const date_debut = new Date(periodeEssai.date_debut);
-      const date_actuel = new Date();
-      const dureeRestante = periodeEssai.duree - PeriodesEssai.differenceInMonths(date_debut, date_actuel);
-
-      if (dureeRestante <= 0) {
-        entreprise.statut = "Actif";
-        const { id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut } = entreprise;
-        const result = await Entreprises.updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut);
-
-        if (result) {
-          return await LoginController.checkEntreprise(entreprise.matricule);
-        }
-      }
-
-      return { valid: true };
-    }
-
-    return { valid: true, message: null };
-  }
-
-  static async checkActiveSubscription(entreprise) {
-    const abonnement = await AML_Abonnements.getAbonnementByIdEntreprise(entreprise.id);
-
-    if (abonnement) {
-      const date_debut = new Date(abonnement.date_debut);
-      const date_actuel = new Date();
-      const dureeRestante = abonnement.duree - PeriodesEssai.differenceInMonths(date_debut, date_actuel);
-      if (dureeRestante <= 0) {
-        entreprise.statut = "invalid";
-        const { id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut } = entreprise;
-        const result = await Entreprises.updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut);
-
-        if (result) {
-          return await LoginController.checkEntreprise(entreprise.matricule);
-        }
-      }
-    }
-
-    return {
-      valid: true,
-      message: null,
-    };
-  }
 }
 
 export { LoginController };
