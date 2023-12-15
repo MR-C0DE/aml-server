@@ -412,6 +412,49 @@ CREATE TABLE `aml_paiements_entreprises` (
   CONSTRAINT `aml_paiements_entreprises_ibfk_1` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- Structure de la table `paiements_entreprises` mise à jour
+CREATE TABLE `paiements_entreprises` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_entreprise` int(11) NOT NULL,
+  `date_paiement` datetime NOT NULL,
+  `montant` decimal(10,2) NOT NULL,
+  `id_abonnement` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_entreprise` (`id_entreprise`),
+  KEY `id_abonnement` (`id_abonnement`),
+  CONSTRAINT `fk_paiements_entreprises_entreprise` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`),
+  CONSTRAINT `fk_paiements_entreprises_abonnements` FOREIGN KEY (`id_abonnement`) REFERENCES `abonnements` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Structure de la table `abonnements`
+CREATE TABLE `abonnements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_entreprise` int(11) NOT NULL,
+  `montant` decimal(10,2) NOT NULL,
+  `duree` int(11) NOT NULL,
+  `date_debut` DATE NOT NULL,
+  `date_prochain_paiement` DATE NOT NULL,
+  `a_paye` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `id_entreprise` (`id_entreprise`),
+  CONSTRAINT `fk_abonnements_entreprise` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Structure de la table `periodes_essai`
+CREATE TABLE `periodes_essai` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_entreprise` int(11) NOT NULL,
+  `date_debut` DATE NOT NULL,
+  `duree` int(11) NOT NULL, -- La durée de la période d'essai en mois
+  PRIMARY KEY (`id`),
+  KEY `id_entreprise` (`id_entreprise`),
+  CONSTRAINT `fk_periodes_essai_entreprise` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- --------------------------------------------------------
 
 
@@ -485,5 +528,4 @@ CREATE TABLE `analyses_ventes` (
   KEY `id_produit` (`id_produit`),
   CONSTRAINT `fk_analyses_ventes_produit` FOREIGN KEY (`id_produit`) REFERENCES `produits` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 

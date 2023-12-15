@@ -212,3 +212,13 @@ INSERT INTO analyses_ventes (id_produit, mois_annee, ventes_totales, stock_initi
 (3, '2022-03', 60, 110, 50),
 (4, '2022-03', 15, 58, 43),
 (5, '2022-03', 28, 0, 0);
+
+
+-- Exemple d'insertion de données dans la table `periodes_essai`
+INSERT INTO periodes_essai (id_entreprise, date_debut, duree)
+VALUES
+  (1, '2023-01-01', 3), -- Période d'essai de 3 mois pour l'entreprise avec l'ID 1
+  (2, '2023-02-15', 2), -- Période d'essai de 2 mois pour l'entreprise avec l'ID 2
+  (3, '2023-03-10', 1), -- Période d'essai d'1 mois pour l'entreprise avec l'ID 3
+  (4, '2023-04-20', 3), -- Période d'essai de 3 mois pour l'entreprise avec l'ID 4
+  (5, '2023-05-05', 2); -- Période d'essai de 2 mois pour l'entreprise avec l'ID 5
