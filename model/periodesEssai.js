@@ -85,6 +85,15 @@ class PeriodesEssai {
       );
     });
   }
+
+  static differenceInMonths(dateInitial, dateCurrent) {
+    let differenceInMonths = (dateCurrent.getFullYear() - dateInitial.getFullYear()) * 12;
+    differenceInMonths += dateCurrent.getMonth() - dateInitial.getMonth();
+    
+    return differenceInMonths;
+  }
+  
+  
 }
 
 export { PeriodesEssai };

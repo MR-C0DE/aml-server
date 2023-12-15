@@ -195,6 +195,8 @@ class Entreprises {
 
     return matricule;
   }
+
+  
 }
 
 export { Entreprises };

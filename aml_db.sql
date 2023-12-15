@@ -432,11 +432,9 @@ CREATE TABLE `paiements_entreprises` (
 CREATE TABLE `abonnements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_entreprise` int(11) NOT NULL,
-  `montant` decimal(10,2) NOT NULL,
   `duree` int(11) NOT NULL,
   `date_debut` DATE NOT NULL,
   `date_prochain_paiement` DATE NOT NULL,
-  `a_paye` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `id_entreprise` (`id_entreprise`),
   CONSTRAINT `fk_abonnements_entreprise` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprises` (`id`)

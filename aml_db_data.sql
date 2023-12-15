@@ -214,11 +214,26 @@ INSERT INTO analyses_ventes (id_produit, mois_annee, ventes_totales, stock_initi
 (5, '2022-03', 28, 0, 0);
 
 
--- Exemple d'insertion de données dans la table `periodes_essai`
-INSERT INTO periodes_essai (id_entreprise, date_debut, duree)
-VALUES
-  (1, '2023-01-01', 3), -- Période d'essai de 3 mois pour l'entreprise avec l'ID 1
-  (2, '2023-02-15', 2), -- Période d'essai de 2 mois pour l'entreprise avec l'ID 2
-  (3, '2023-03-10', 1), -- Période d'essai d'1 mois pour l'entreprise avec l'ID 3
-  (4, '2023-04-20', 3), -- Période d'essai de 3 mois pour l'entreprise avec l'ID 4
-  (5, '2023-05-05', 2); -- Période d'essai de 2 mois pour l'entreprise avec l'ID 5
+
+INSERT INTO abonnements (id_entreprise, duree, date_debut, date_prochain_paiement) VALUES
+(1, 12, '2023-01-01', '2023-02-01'),
+(2, 6, '2023-03-15', '2023-04-15'),
+(3, 24, '2023-02-10', '2023-03-10'),
+(4, 18, '2023-04-05', '2023-05-05'),
+(5, 8, '2023-01-20', '2023-02-20');
+
+INSERT INTO periodes_essai (id_entreprise, date_debut, duree) VALUES
+(1, '2023-01-05', 3),
+(2, '2023-02-20', 2),
+(3, '2023-03-10', 1),
+(4, '2023-04-01', 4),
+(5, '2023-01-15', 2);
+
+
+
+INSERT INTO paiements_entreprises (id_entreprise, date_paiement, montant, id_abonnement) VALUES
+(1, '2023-02-01 12:00:00', 5000.00, 1),
+(2, '2023-04-15 14:30:00', 3000.50, 2),
+(3, '2023-03-10 10:00:00', 8000.75, 3),
+(4, '2023-05-05 18:45:00', 6000.20, 4),
+(5, '2023-02-20 09:15:00', 2500.80, 5);
