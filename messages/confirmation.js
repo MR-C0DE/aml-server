@@ -12,6 +12,8 @@ Il est impératif que vous mémorisiez soigneusement votre Matricule Utilisateur
 
 Nous tenons à souligner l'importance de la sécurité de votre compte. Par conséquent, nous vous recommandons vivement de changer votre mot de passe dès votre première connexion. Pour ce faire, connectez-vous à votre compte en utilisant le mot de passe initial fourni, puis accédez aux paramètres de votre profil pour définir un nouveau mot de passe sécurisé.
 
+De plus, nous souhaitons vous informer que vous bénéficiez d'une période d'essai de 3 mois pour profiter pleinement de nos services. Pour assurer la continuité de vos services au-delà de cette période, nous vous encourageons à effectuer le paiement de votre abonnement bien avant la fin de la période d'essai.
+
 Votre sécurité est notre priorité. Si vous avez des questions ou avez besoin d'aide supplémentaire, n'hésitez pas à nous contacter à l'adresse support@aml-business.com.
 
 Cordialement,

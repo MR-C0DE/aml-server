@@ -4,6 +4,7 @@ import { Entreprises } from "../model/entreprises.js";
 import { Utilisateurs } from "../model/utilisateurs.js";
 import { messageConfirmation } from "../messages/confirmation.js";
 import Validation from "../validation/validation.js";
+import { AML_PeriodesEssai } from "../model/aml_periodesEssai.js";
 
 class EntreprisesController {
   static async getEntreprises(request, response) {
@@ -158,7 +159,7 @@ class EntreprisesController {
       const { nom, pays, ville, adresse, telephone, email, site_web } =
         info_entreprise;
 
-      const statut = "actif";
+      const statut = "essaie";
       const matriculeEntreprise = await Entreprises.generateUniqueMatricule();
 
       const resultEntreprise = await Entreprises.insertEntreprise(
@@ -219,6 +220,9 @@ class EntreprisesController {
         roleUtilisateur
       );
 
+      await AML_PeriodesEssai.insertPeriodeEssai(resultEmploye.insertId, new Date(), 3)
+
+
       // Envoyer une réponse immédiate avec les données générées
       response.status(200).json({
         resultEntreprise,
@@ -227,6 +231,8 @@ class EntreprisesController {
   
     });
 
+
+   
       // Maintenant, envoyez l'e-mail
       const emailSender = new EmailSender();
       const sujetConfirmation =

@@ -207,11 +207,11 @@ class Entreprises {
         return { valid: false, message: "Entreprise not found" };
       }
 
-      if (entreprise.statut === "essai") {
+      if (entreprise.statut === "essaie") {
         return await Entreprises.checkTrialPeriod(entreprise);
       } else if (entreprise.statut === "invalide") {
         return { valid: false, message: "Invalid subscription" };
-      } else if (entreprise.statut === 'Actif') {
+      } else if (entreprise.statut === 'actif') {
         return await Entreprises.checkActiveSubscription(entreprise);
       }
 
@@ -231,7 +231,7 @@ class Entreprises {
       const dureeRestante = periodeEssai.duree - Entreprises.differenceInMonths(date_debut, date_actuel);
 
       if (dureeRestante <= 0) {
-        entreprise.statut = "Actif";
+        entreprise.statut = "actif";
         const { id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut } = entreprise;
         const result = await Entreprises.updateEntreprise(id, nom, pays, ville, adresse, telephone, email, site_web, matricule, statut);
 
@@ -243,7 +243,7 @@ class Entreprises {
       return { valid: true, message: "in trial period" };
     }
 
-    return { valid: true, message: null };
+    return { valid: false, message: "check in trial period invalid" };
   }
 
   static async checkActiveSubscription(entreprise) {
