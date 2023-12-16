@@ -206,7 +206,7 @@ class EntreprisesController {
         resultEntreprise.insertId
       );
 
-      const password = Utilisateurs.generatePassword(5);
+      const password = Utilisateurs.generatePassword(7);
       const hashedPassword = await Utilisateurs.cryptPasswordUtilisateur(
         password
       );
@@ -220,7 +220,7 @@ class EntreprisesController {
         roleUtilisateur
       );
 
-      await AML_PeriodesEssai.insertPeriodeEssai(resultEmploye.insertId, new Date(), 3)
+      await AML_PeriodesEssai.insertPeriodeEssai(resultEntreprise.insertId, new Date(), 3)
 
 
       // Envoyer une réponse immédiate avec les données générées
